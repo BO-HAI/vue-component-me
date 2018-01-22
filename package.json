@@ -1,9 +1,9 @@
 {
-  "name": "component_me",
+  "name": "vue-component-me",
   "version": "1.0.0",
   "description": "Own component library",
   "author": "bohai <1169282772@qq.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",

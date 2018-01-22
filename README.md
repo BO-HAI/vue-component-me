@@ -2,6 +2,8 @@
 
 > Own component library
 
+[![NPM](https://nodei.co/npm/vue-component-me.png)](https://nodei.co/npm/vue-component-me/)
+
 ## Build Setup
 
 ``` bash
