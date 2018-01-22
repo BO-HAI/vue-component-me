@@ -67,9 +67,7 @@ export default {
             let _self = this;
             _self.$data.count = this.images.length;
             // 将原始图片对象列表拷贝一份，如果不复制，后续对列表的操作会导致watch会再次执行init
-            this.images.forEach((img) => {
-                _self.$data.imgList.push(img);
-            });
+            this.$data.imgList = this.images.slice(0)
 
             _self.$data.imgList.forEach((img, index) => {
                 img.position = ((index * -1) * 100) + '%';
