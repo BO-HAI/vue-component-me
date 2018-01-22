@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="slider-image">
         <ul class="image-list">
-            <li v-for="(img, index) in images" class="image-item"
+            <li v-for="(img, index) in imgList" class="image-item"
                 :style="{
                     'color': img.color,
                     'background-image': 'url(' + img.url + ')',
@@ -23,7 +23,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="play-group" :style='{"margin-left": ((images.length * 17 + 20) / 2) * -1 + "px" }'>
+        <ul v-if="imgList.length > 2" class="play-group" :style='{"margin-left": ((images.length * 17 + 20) / 2) * -1 + "px" }'>
             <li v-for="(img, index) in images" class="play-button" :class="{active: index == temp}" v-on:click="setIndex(index)"></li>
         </ul>
     </div>
@@ -33,43 +33,7 @@
 export default {
     props: {
         images: {
-            type: Array,
-            default: function () {
-                return [
-                    {
-                        url: 'http://ykonlinevideo.bs2dl.yy.com:80/22b9cb28d7174b00a2fb3d6c8ecdaa37.jpg',
-                        link: '#',
-                        title: 'You Growth is Our Target',
-                        subtitle: 'Proper sadness that says the deep feelings of sadness, that the lack of wisdom',
-                        linkText: 'ABOUT US',
-                        color: '#ffffff'
-                    },
-                    {
-                        url: 'http://ykonlinevideo.bs2dl.yy.com:80/0d07557681874b5f966f46f938809b8c.jpg',
-                        link: '#',
-                        title: 'You Growth is Our Target',
-                        subtitle: 'Proper sadness that says the deep feelings of sadness, that the lack of wisdom',
-                        linkText: 'ABOUT US',
-                        color: '#ffffff'
-                    },
-                    {
-                        url: 'http://ykonlinevideo.bs2dl.yy.com:80/22b9cb28d7174b00a2fb3d6c8ecdaa37.jpg',
-                        link: '#',
-                        title: 'You Growth is Our Target',
-                        subtitle: 'Proper sadness that says the deep feelings of sadness, that the lack of wisdom',
-                        linkText: 'ABOUT US',
-                        color: '#ffffff'
-                    },
-                    {
-                        url: 'http://ykonlinevideo.bs2dl.yy.com:80/0d07557681874b5f966f46f938809b8c.jpg',
-                        link: '#',
-                        title: 'You Growth is Our Target',
-                        subtitle: 'Proper sadness that says the deep feelings of sadness, that the lack of wisdom',
-                        linkText: 'ABOUT US',
-                        color: '#ffffff'
-                    }
-                ]
-            }
+            type: Array
         },
         speed: {
             type: Number,
@@ -96,21 +60,21 @@ export default {
 
     },
     mounted() {
-        this.go();
+        this.init().go();
     },
     methods: {
-        init(images) {
+        init() {
             let _self = this;
-            _self.$data.count = images.length;
+            _self.$data.count = this.images.length;
             // 将原始图片对象列表拷贝一份，如果不复制，后续对列表的操作会导致watch会再次执行init
-            images.forEach((img) => {
+            this.images.forEach((img) => {
                 _self.$data.imgList.push(img);
             });
-
 
             _self.$data.imgList.forEach((img, index) => {
                 img.position = ((index * -1) * 100) + '%';
             });
+            return this;
         },
         setIndex(index) {
             let _self = this;
@@ -171,6 +135,161 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.slider-image {
+    width: 100%;
+    height: 450px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
 
+    .image-list {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .image-item {
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        transition-timing-function: ease;
+
+        .title {
+            text-align: center;
+            font-size: 60px;
+            font-weight: bold;
+            margin-top: 150px;
+            height: 50px;
+            line-height: 60px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            height: 16px;
+        }
+
+        .button {
+            width: 168px;
+            height: 43px;
+            text-align: center;
+            line-height: 43px;
+            margin: auto;
+            display: block;
+            margin-top: 35px;
+            font-weight: bold;
+            position: relative;
+            transition: all .5s;
+
+            .button-line {
+                position: absolute;
+                display: block;
+                background: #f36371;
+                opacity: 0;
+                transition: all .5s;
+                transition-timing-function: ease;
+            }
+
+            .button-line--top {
+                height: 1px;
+                width: 170px;
+                top: -1px;
+                left: -170px;
+            }
+
+            .button-line--bottom {
+                height: 1px;
+                width: 170px;
+                bottom: -1px;
+                right: -170px;
+            }
+
+            .button-line--left {
+                width: 1px;
+                height: 45px;
+                bottom: -45px;
+                left: -1px;
+            }
+
+            .button-line--right {
+                width: 1px;
+                height: 45px;
+                top: -45px;
+                right: -1px;
+            }
+
+            &:hover {
+                color: #f36371 !important;
+
+                .button-line {
+                    opacity: 1;
+                }
+
+                .button-line--top {
+                    left: -1px;
+                }
+
+                .button-line--bottom {
+                    right: -1px;
+                }
+
+                .button-line--left {
+                    bottom: -1px;
+                }
+
+                .button-line--right {
+                    top: -1px;
+                }
+            }
+        }
+
+        .button-full {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+
+            i {
+                display: none !important;
+            }
+        }
+    }
+
+    .play-group {
+        height: 20px;
+        background: rgba(51, 51, 51, 0.51);
+        position: absolute;
+        text-align: center;
+        bottom: 20px;
+        padding: 0 10px;
+        border-radius: 15px;
+        left: 50%;
+
+        .play-button {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            margin: 0 2px;
+            background: #696969;
+            cursor: pointer;
+
+            &.active {
+                background: #ffffff;
+            }
+        }
+    }
+}
 </style>

@@ -9,6 +9,9 @@
 ``` bash
 # install dependencies
 npm install
+npm install node-sass (node 9.x cnpm node-sass@4.7.2)
+npm install sass-loader
+npm install axios
 
 # serve with hot reload at localhost:8080
 npm run dev
@@ -25,5 +28,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
