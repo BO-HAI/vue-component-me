@@ -35,10 +35,16 @@ npm test
 
 ### 轮播图
 ```javascript
+// js
 import slideshow from 'vue-component-me/library/slideshow.vue'
-Vue.use(slideshow)
 
+// html
 <slideshow :images="list" :time="15" :speed="1.5"></slideshow>
+```
+ 或
+```javascript
+import slideshow from 'vue-component-me/library/slideshow.js'
+Vue.use(slideshow)
 ```
 
 #### 参数
