@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "Own component library",
   "author": "bohai <1169282772@qq.com>",
+  "main": "library/main.js",
   "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -63,6 +64,7 @@
     "shelljs": "^0.7.6",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-component-me": "^1.0.2",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",

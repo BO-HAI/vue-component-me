@@ -12,7 +12,7 @@
 # install dependencies
 npm install
 npm install node-sass (node 9.x cnpm node-sass@4.7.2)
-npm install sass-loader
+npm install sass-loader css-loader vue-style-loader
 npm install axios
 
 # serve with hot reload at localhost:8080
@@ -35,10 +35,10 @@ npm test
 
 ### 轮播图
 ```javascript
-import slideshow from 'slideshow'
+import slideshow from 'vue-component-me/library/slideshow.vue'
 Vue.use(slideshow)
 
-<slideshow :images="list"></slideshow>
+<slideshow :images="list" :time="15" :speed="1.5"></slideshow>
 ```
 
 #### 参数
@@ -54,19 +54,19 @@ Vue.use(slideshow)
 ```json
 [
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/22b9cb28d7174b00a2fb3d6c8ecdaa37.jpg",
+        "url": "",
         "link": "#",
-        "title": "这是一个轮播图组件",
-        "subtitle": "import slideshow from '../slideshow'; Vue.use(slideshow)",
-        "linkText": "ABOUT US",
+        "title": "",
+        "subtitle": "",
+        "linkText": "",
         "color": "#ffffff"
     },
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/0d07557681874b5f966f46f938809b8c.jpg",
+        "url": "",
         "link": "#",
-        "title": "我想让它支持pc端和移动端",
-        "subtitle": "I want it to support the PC side and the mobile end",
-        "linkText": "ABOUT US",
+        "title": "",
+        "subtitle": "",
+        "linkText": "",
         "color": "#ffffff"
     }
 ]
