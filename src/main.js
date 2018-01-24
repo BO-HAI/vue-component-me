@@ -3,8 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import slideshow from 'vue-component-me/library/slideshow.js'
-
+// import slideshow from 'vue-component-me/library/slideshow.js'
+import slideshow from '../library/slideshow.js'
 Vue.config.productionTip = false
 Vue.use(slideshow)
 

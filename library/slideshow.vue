@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="slider-image">
+    <div class="slider-image" :style="{height, width}">
         <ul class="image-list">
             <li v-for="(img, index) in imgList" class="image-item"
                 :style="{
@@ -8,23 +8,29 @@
                     'right': img.position,
                     'transition': 'all ' + speed + 's ease-in-out'
                     }">
-                <p class="title en">{{img.title}}</p>
-                <p class="subtitle en">{{img.subtitle}}</p>
-                <a class="button en"
-                   target="_black"
-                   :href="img.link"
-                   :class="{'button-full': !img.linkText}"
-                   :style="{'color': img.color, 'border': '1px solid ' + img.color}">
-                    {{img.linkText}}
-                    <i class="button-line button-line--top"></i>
-                    <i class="button-line button-line--bottom"></i>
-                    <i class="button-line button-line--left"></i>
-                    <i class="button-line button-line--right"></i>
-                </a>
+                <div class="">
+                    <p class="title en">{{img.title}}</p>
+                    <p class="subtitle en">{{img.subtitle}}</p>
+                    <a class="button en"
+                       v-on:mouseover="setColor(img.btnHoverColor, $event)"
+                       v-on:mouseout="setColor(img.color, $event)"
+                       target="_black"
+                       :href="img.link"
+                       :class="{'button-full': !img.linkText}"
+                       :style="{'color': img.color, 'border': '1px solid ' + img.color}">
+                        {{img.linkText}}
+                        <i class="button-line button-line--top" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
+                        <i class="button-line button-line--bottom" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
+                        <i class="button-line button-line--left" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
+                        <i class="button-line button-line--right" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
+                    </a>
+                </div>
             </li>
         </ul>
-        <ul v-if="imgList.length > 2" class="play-group" :style='{"margin-left": ((images.length * 17 + 20) / 2) * -1 + "px" }'>
-            <li v-for="(img, index) in images" class="play-button" :class="{active: index == temp}" v-on:click="setIndex(index)"></li>
+        <ul v-if="imgList.length > 2" class="play-group" :style='{"margin-left": ((images.length * (btnMargin * 2 + 10) + 20) / 2) * -1 + "px" }'>
+            <li v-for="(img, index) in images" class="play-button"
+            :class="{active: index == temp}"
+            v-on:click="movement(index)" :style="{'margin': '0 ' + btnMargin + 'px'}"></li>
         </ul>
     </div>
 </template>
@@ -42,6 +48,18 @@ export default {
         time: {
             type: Number,
             default: 15000
+        },
+        btnMargin: {
+            type: Number,
+            default: 10
+        },
+        height: {
+            type: String,
+            default: '450px'
+        },
+        width: {
+            type: String,
+            default: '100%'
         }
     },
     watch: {
@@ -53,14 +71,16 @@ export default {
             forward: true,
             temp: 0, // 当前图片下标
             timer: null,
-            imgList: []
+            imgList: [],
+            defBtnHoverColor: '#f36371',
+            // btnMargin: 10
         }
     },
     beforeMount(){
 
     },
     mounted() {
-        this.init().go();
+        this.init();
     },
     methods: {
         init() {
@@ -72,9 +92,11 @@ export default {
             _self.$data.imgList.forEach((img, index) => {
                 img.position = ((index * -1) * 100) + '%';
             });
-            return this;
+
+            this.timeMeter();
         },
-        setIndex(index) {
+        movement(index) {
+            // 运动开始
             let _self = this;
             clearInterval(_self.$data.timer);
             // 接受当前激活的图片下标
@@ -98,19 +120,21 @@ export default {
                 _self.temp++;
             }
 
-            _self.compute();
-            _self.go();
+            _self.computePosition();
+            _self.timeMeter();
         },
-        go() {
+        timeMeter() {
+            // 计时器
             let _self = this;
             if (_self.images.length < 2) {
                 return;
             }
+
             _self.$data.timer = setInterval(() => {
-                _self.compute();
+                _self.computePosition();
             }, _self.time);
         },
-        compute() {
+        computePosition() {
             let _self = this;
             if (!_self.$data.forward ) {
                 // _self.temp--;
@@ -128,6 +152,9 @@ export default {
                 _self.temp++;
                 _self.$data.forward = _self.temp === _self.$data.count - 1 ? false : true;
             }
+        },
+        setColor(color, event) {
+            event.path[0].style.color = color ? color : this.$data.defBtnHoverColor;
         }
     }
 }
@@ -135,12 +162,15 @@ export default {
 
 <style lang="scss">
 .slider-image {
-    width: 100%;
-    height: 450px;
     padding: 0;
     margin: 0;
     position: relative;
     overflow: hidden;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
 
     .image-list {
         width: 100%;
@@ -152,6 +182,7 @@ export default {
     .image-item {
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: 50%;
         height: 100%;
         width: 100%;
         overflow: hidden;
@@ -161,19 +192,24 @@ export default {
 
         .title {
             text-align: center;
-            font-size: 60px;
             font-weight: bold;
-            margin-top: 150px;
-            height: 50px;
-            line-height: 60px;
+            margin-top: 6rem;
+            margin-bottom: 2rem;
+            line-height: 3rem;
+            font-size: 3rem;
+            transition: all .5s;
         }
 
         .subtitle {
             text-align: center;
-            font-size: 16px;
             font-weight: bold;
-            margin-top: 20px;
+            margin-bottom: 4rem;
+            // margin-top: 20px;
             height: 16px;
+            transition: all .5s;
+
+            line-height: 1.2rem;
+            font-size: 1.2rem;
         }
 
         .button {
@@ -183,7 +219,7 @@ export default {
             line-height: 43px;
             margin: auto;
             display: block;
-            margin-top: 35px;
+            // margin-top: 35px;
             font-weight: bold;
             position: relative;
             transition: all .5s;
@@ -191,7 +227,6 @@ export default {
             .button-line {
                 position: absolute;
                 display: block;
-                background: #f36371;
                 opacity: 0;
                 transition: all .5s;
                 transition-timing-function: ease;
@@ -226,8 +261,6 @@ export default {
             }
 
             &:hover {
-                color: #f36371 !important;
-
                 .button-line {
                     opacity: 1;
                 }
@@ -266,6 +299,7 @@ export default {
 
     .play-group {
         height: 20px;
+        line-height: 20px;
         background: rgba(51, 51, 51, 0.51);
         position: absolute;
         text-align: center;
@@ -280,7 +314,7 @@ export default {
             height: 10px;
             background: #ffffff;
             border-radius: 50%;
-            margin: 0 2px;
+            // margin: 0 10px;
             background: #696969;
             cursor: pointer;
 
@@ -289,5 +323,15 @@ export default {
             }
         }
     }
+}
+
+@media screen and (max-width: 600px) {
+    .slider-image .image-item .title {
+        font-size: 2.5rem;
+    }
+
+    // .slider-image .play-group .play-button {
+    //     margin: 0 10px;
+    // }
 }
 </style>

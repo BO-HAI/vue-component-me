@@ -65,7 +65,8 @@ Vue.use(slideshow)
         "title": "",
         "subtitle": "",
         "linkText": "",
-        "color": "#ffffff"
+        "color": "#ffffff",
+        "btnHoverColor": "#f36371"
     },
     {
         "url": "",
@@ -73,13 +74,23 @@ Vue.use(slideshow)
         "title": "",
         "subtitle": "",
         "linkText": "",
-        "color": "#ffffff"
+        "color": "#ffffff",
+        "btnHoverColor": "#f36371"
     }
 ]
 ```
 
+###### height [type: String]
+高度， 默认‘450px’；带标题不建议小于“350px”
+
+###### width [type: String]
+宽度， 默认‘100%’
+
 ###### time [type: Number]
-轮播间隔时间，默认15秒
+轮播间隔时间，默认15000 单位“毫秒”
 
 ###### speed [type: Number]
-滚动速度，默认1.5秒
+滚动速度，默认1.5 单位“秒”
+
+###### btnMargin [type: Number]
+轮播按钮间距，默认10 单位“px”

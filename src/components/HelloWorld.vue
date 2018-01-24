@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{msg}}</h1>
-    <slideshow :images="list"></slideshow>
+    <slideshow :images="list" :time="33000"></slideshow>
   </div>
 </template>
 
@@ -18,6 +18,9 @@ export default {
     mounted () {
         axios.get('/static/data/banner_images.js').then((res) => {
             console.log(res)
+
+            res.data[0].btnHoverColor = '#54b883'
+
             this.$data.list = res.data
         })
     }
