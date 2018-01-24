@@ -1,34 +1,34 @@
 [
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/22b9cb28d7174b00a2fb3d6c8ecdaa37.jpg",
+        "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/359026dcb19541888898d8705fddbe48.jpg",
         "link": "#",
         "title": "这是一个轮播图组件",
-        "subtitle": "import slideshow from '../slideshow'; Vue.use(slideshow)",
+        "subtitle": "import slideshow from 'vue-component-me/library/slideshow.js'",
         "linkText": "ABOUT US",
         "color": "#ffffff"
     },
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/0d07557681874b5f966f46f938809b8c.jpg",
+        "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/c6299568d981433c877de5421cf08218.jpg",
         "link": "#",
-        "title": "我想让它支持pc端和移动端",
-        "subtitle": "I want it to support the PC side and the mobile end",
+        "title": "它支持pc端和移动端",
+        "subtitle": "It supports the PC side and the mobile end",
         "linkText": "ABOUT US",
         "color": "#ffffff"
     },
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/22b9cb28d7174b00a2fb3d6c8ecdaa37.jpg",
+        "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/959aaecaa1e44034827243035c74d79f.jpg",
         "link": "#",
-        "title": "我正在努力的去实现,当然这并不复杂",
-        "subtitle": "I'm trying to achieve it, and of course it's not complicated.",
-        "linkText": "ABOUT US",
-        "color": "#ffffff"
+        "title": "",
+        "subtitle": "",
+        "linkText": "",
+        "color": ""
     },
     {
-        "url": "http://ykonlinevideo.bs2dl.yy.com:80/0d07557681874b5f966f46f938809b8c.jpg",
+        "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/e5d511f0b8a94470a12171bb6c54e01a.jpg",
         "link": "#",
-        "title": "我还有一些其他的想法,会在这个项目里去实现",
-        "subtitle": "I have some other ideas that will be done in this project.",
-        "linkText": "ABOUT US",
-        "color": "#ffffff"
+        "title": "",
+        "subtitle": "",
+        "linkText": "",
+        "color": ""
     }
 ]

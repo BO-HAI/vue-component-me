@@ -8,7 +8,7 @@
                     'right': img.position,
                     'transition': 'all ' + speed + 's ease-in-out'
                     }">
-                <div class="">
+                <div v-if="img.title.length > 0" class="text-bg">
                     <p class="title en">{{img.title}}</p>
                     <p class="subtitle en">{{img.subtitle}}</p>
                     <a class="button en"
@@ -16,7 +16,6 @@
                        v-on:mouseout="setColor(img.color, $event)"
                        target="_black"
                        :href="img.link"
-                       :class="{'button-full': !img.linkText}"
                        :style="{'color': img.color, 'border': '1px solid ' + img.color}">
                         {{img.linkText}}
                         <i class="button-line button-line--top" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
@@ -25,6 +24,10 @@
                         <i class="button-line button-line--right" :style="{'background-color': img.btnHoverColor ? img.btnHoverColor : '#f36371'}"></i>
                     </a>
                 </div>
+                <a v-if="img.title.length === 0" class="button en button-full"
+                   target="_black"
+                   :href="img.link">
+                </a>
             </li>
         </ul>
         <ul v-if="imgList.length > 2" class="play-group" :style='{"margin-left": ((images.length * (btnMargin * 2 + 10) + 20) / 2) * -1 + "px" }'>
@@ -190,6 +193,15 @@ export default {
         top: 0;
         transition-timing-function: ease;
 
+        .text-bg {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: rgba(29, 29, 29, 0.67);
+        }
+
         .title {
             text-align: center;
             font-weight: bold;
@@ -204,10 +216,8 @@ export default {
             text-align: center;
             font-weight: bold;
             margin-bottom: 4rem;
-            // margin-top: 20px;
             height: 16px;
             transition: all .5s;
-
             line-height: 1.2rem;
             font-size: 1.2rem;
         }
@@ -219,7 +229,6 @@ export default {
             line-height: 43px;
             margin: auto;
             display: block;
-            // margin-top: 35px;
             font-weight: bold;
             position: relative;
             transition: all .5s;
@@ -300,7 +309,7 @@ export default {
     .play-group {
         height: 20px;
         line-height: 20px;
-        background: rgba(51, 51, 51, 0.51);
+        background: rgba(51, 51, 51, 0.74);
         position: absolute;
         text-align: center;
         bottom: 20px;
@@ -312,10 +321,8 @@ export default {
             display: inline-block;
             width: 10px;
             height: 10px;
-            background: #ffffff;
             border-radius: 50%;
-            // margin: 0 10px;
-            background: #696969;
+            background: #848080;
             cursor: pointer;
 
             &.active {
@@ -329,9 +336,5 @@ export default {
     .slider-image .image-item .title {
         font-size: 2.5rem;
     }
-
-    // .slider-image .play-group .play-button {
-    //     margin: 0 10px;
-    // }
 }
 </style>

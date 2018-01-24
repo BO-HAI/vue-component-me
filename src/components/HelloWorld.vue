@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{msg}}</h1>
+    <h1 class="page-title">{{msg}}</h1>
     <slideshow :images="list" :time="33000"></slideshow>
   </div>
 </template>
@@ -16,7 +16,13 @@ export default {
         }
     },
     mounted () {
-        axios.get('/static/data/banner_images.js').then((res) => {
+        const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.js'
+        const URL = '/static/data/banner_images.js'
+
+        console.log(GITHUB_URL)
+        console.log(URL)
+
+        axios.get(GITHUB_URL).then((res) => {
             console.log(res)
 
             res.data[0].btnHoverColor = '#54b883'
@@ -30,7 +36,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
+    font-weight: normal;
 }
 ul {
   list-style-type: none;
@@ -42,5 +48,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.page-title {
+    /*background: #dddddd;*/
+    padding: 20px;
+    margin: 0;
 }
 </style>

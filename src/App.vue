@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <header>
+        <img src="./assets/logo.png">
+    </header>
+
     <router-view/>
   </div>
 </template>
@@ -33,6 +36,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+    /*margin-top: 60px;*/
+}
+
+header {
+    padding: 20px 0;
+    height: 90px;
+    /*background: #252525;*/
+}
+
+header img {
+    width: 90px;
 }
 </style>
