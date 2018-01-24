@@ -15,7 +15,12 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "css-loader": "^0.28.0",
+    "vue-style-loader": "^3.0.1",
+    "axios": "^0.17.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

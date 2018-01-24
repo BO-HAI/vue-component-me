@@ -6,14 +6,13 @@
 
 [![NPM](https://nodei.co/npm/vue-component-me.png)](https://nodei.co/npm/vue-component-me/)
 
+## demo
+
 ## Build Setup
 
 ``` bash
 # install dependencies
-npm install
-npm install node-sass (node 9.x cnpm node-sass@4.7.2)
-npm install sass-loader css-loader vue-style-loader
-npm install axios
+npm install 
 
 # serve with hot reload at localhost:8080
 npm run dev
