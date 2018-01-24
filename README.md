@@ -44,7 +44,7 @@ npm test
 全局组件注入：
 
 ```javascript
-import LIBRARY_ME from 'vue-component-me/library/main.js'
+import library_me from 'vue-component-me/library/main.js'
 Vue.use(library_me)
 ```
 
@@ -55,4 +55,4 @@ import slideshow_me from 'vue-component-me/library/slideshow.js'
 Vue.use(slideshow_me)
 ```
 
-按需引入请查看 doc 目录
+按需引入请查看 <https://github.com/BO-HAI/vue-component-me/tree/master/doc/>
