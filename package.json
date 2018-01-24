@@ -1,6 +1,6 @@
 {
   "name": "vue-component-me",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Own component library",
   "author": "bohai <1169282772@qq.com>",
   "main": "library/main.js",
