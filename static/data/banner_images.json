@@ -10,7 +10,7 @@
     {
         "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/c6299568d981433c877de5421cf08218.jpg",
         "link": "#",
-        "title": "它支持pc端和移动端",
+        "title": "它支持PC端和移动端",
         "subtitle": "It supports the PC side and the mobile end",
         "linkText": "ABOUT US",
         "color": "#ffffff"
@@ -26,9 +26,10 @@
     {
         "url": "http://ykonlinevideo.bs2dl.yy.com:80/original/e5d511f0b8a94470a12171bb6c54e01a.jpg",
         "link": "#",
-        "title": "",
-        "subtitle": "",
-        "linkText": "",
-        "color": ""
+        "title": "可以自定义字体颜色及按钮颜色",
+        "subtitle": "You can customize the color of the font and the button color",
+        "linkText": "ABOUT US",
+        "color": "#54b883",
+        "btnHoverColor": "#ffffff"
     }
 ]

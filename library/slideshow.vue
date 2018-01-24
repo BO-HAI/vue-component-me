@@ -333,8 +333,15 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-    .slider-image .image-item .title {
-        font-size: 2.5rem;
+    .slider-image .image-item {
+        .title {
+            font-size: 2.5rem;
+            padding: 0 25px;
+        }
+
+        .subtitle {
+            padding: 0 25px;
+        }
     }
 }
 </style>

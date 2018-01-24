@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <h1 class="page-title">{{msg}}</h1>
-    <slideshow :images="list" :time="33000"></slideshow>
+    <me_slideshow :images="list" :time="15000"></me_slideshow>
+    <me_table></me_table>
   </div>
 </template>
 
@@ -16,13 +17,13 @@ export default {
         }
     },
     mounted () {
-        const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.js'
-        const URL = '/static/data/banner_images.js'
+        const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.json'
+        const URL = '/static/data/banner_images.json'
 
         console.log(GITHUB_URL)
         console.log(URL)
 
-        axios.get(GITHUB_URL).then((res) => {
+        axios.get(URL).then((res) => {
             console.log(res)
 
             res.data[0].btnHoverColor = '#54b883'
