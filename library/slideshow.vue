@@ -232,6 +232,7 @@ export default {
             font-weight: bold;
             position: relative;
             transition: all .5s;
+            box-sizing: content-box;
 
             .button-line {
                 position: absolute;
