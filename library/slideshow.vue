@@ -336,7 +336,7 @@ export default {
 @media screen and (max-width: 600px) {
     .slider-image .image-item {
         .title {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             padding: 0 25px;
         }
 
