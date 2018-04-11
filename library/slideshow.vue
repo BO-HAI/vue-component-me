@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="slider-image" :style="{height, width}">
+    <div class="slider-image" :style="{height, width}" v-on:touchstart="touchstart($event)" v-on:touchend="touchend($event)">
         <ul class="image-list">
             <li v-for="(img, index) in imgList" class="image-item"
                 :style="{
@@ -76,6 +76,10 @@ export default {
             timer: null,
             imgList: [],
             defBtnHoverColor: '#f36371',
+            startX: 0,
+            startY: 0,
+            endX: 0,
+            endY: 0
             // btnMargin: 10
         }
     },
@@ -103,11 +107,11 @@ export default {
             let _self = this;
             clearInterval(_self.$data.timer);
             // 接受当前激活的图片下标
-            _self.temp = index;
+            _self.$data.temp = index;
             // 如果当前下标是最后一张，这只方向向后运动，并且下标＋1
             if (index === _self.$data.count - 1) {
                 _self.$data.forward = false;
-                _self.temp++;
+                _self.$data.temp++;
             }
             // 如果当前下标是第一张，这只方向向前运动，并且下标－1
             if (index === 0) {
@@ -116,11 +120,11 @@ export default {
             }
             // 既不是第一张也不是最后一张 向前运动
             if (index !== _self.$data.count - 1 && index !== 0 && _self.$data.forward) {
-                _self.temp--;
+                _self.$data.temp--;
             }
             // 既不是第一张也不是最后一张 向后运动
             if (index !== _self.$data.count - 1 && index !== 0 && !_self.$data.forward) {
-                _self.temp++;
+                _self.$data.temp++;
             }
 
             _self.computePosition();
@@ -158,6 +162,64 @@ export default {
         },
         setColor(color, event) {
             event.path[0].style.color = color ? color : this.$data.defBtnHoverColor;
+        },
+        getAspect(startX, startY, endX, endY) {
+            var dx, dy, result;
+
+            dx = endX - startX;
+            dy = endY - startY;
+
+            //如果滑动距离太短
+            if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+                return -1;
+            }
+
+            var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            if (angle >= -45 && angle < 45) {
+                result = 4; // 右
+            } else if (angle >= 45 && angle < 135) {
+                result = 1; // 上
+            } else if (angle >= -135 && angle < -45) {
+                result = 2; // 下
+            }
+            else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+                result = 3; // 左
+            }
+
+            return result;
+        },
+        touchstart(e) {
+            e.preventDefault();
+            this.$data.startX = e.changedTouches[0].pageX;
+            this.$data.startY = e.changedTouches[0].pageY;
+        },
+        touchend(e) {
+            let direction;
+            e.preventDefault();
+            this.$data.endX = e.changedTouches[0].pageX;
+            this.$data.endY = e.changedTouches[0].pageY;
+
+            direction = this.getAspect(this.$data.startX, this.$data.startY, this.$data.endX, this.$data.endY);
+            console.log(direction);
+            switch (direction) {
+                case -1:
+                    window.location.href = this.$data.imgList[this.$data.temp].link;
+                    break;
+                case 3:
+                    if (this.$data.temp + 1 >= this.$data.count - 1) {
+                        this.$data.temp = this.$data.count - 2;
+                    }
+                    this.movement(this.$data.temp + 1)
+                    break;
+                case 4:
+                    if (this.$data.temp - 1 < 0) {
+                        this.$data.temp = 0;
+                    }
+                    this.movement(this.$data.temp - 1)
+                    break;
+            }
+
         }
     }
 }
