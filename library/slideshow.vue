@@ -201,7 +201,7 @@ export default {
             this.$data.endY = e.changedTouches[0].pageY;
 
             direction = this.getAspect(this.$data.startX, this.$data.startY, this.$data.endX, this.$data.endY);
-            console.log(direction);
+
             switch (direction) {
                 case -1:
                     window.location.href = this.$data.imgList[this.$data.temp].link;
@@ -214,7 +214,7 @@ export default {
                     break;
                 case 4:
                     if (this.$data.temp - 1 < 0) {
-                        this.$data.temp = 0;
+                        this.$data.temp = 1;
                     }
                     this.movement(this.$data.temp - 1)
                     break;
