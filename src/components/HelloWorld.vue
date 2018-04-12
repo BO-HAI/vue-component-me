@@ -55,5 +55,7 @@ a {
     /*background: #dddddd;*/
     padding: 20px;
     margin: 0;
+    font: 26px "Helvetica Neue", "Open Sans", sans-serif;
+    font-weight: 100;
 }
 </style>
