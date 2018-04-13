@@ -10,21 +10,20 @@
         <tbody>
             <tr v-for="(coll, index) in collection" v-if="index > 0">
                 <template v-for="key in keys">
-                    <td v-if="coll['colspan'] && coll['colspan'].key === key" :colspan="coll['colspan'].num">
+                    <td v-if="coll['_colspan'] && coll['_colspan'].key === key" :colspan="coll['_colspan'].num">
                         {{coll[key]}}
                     </td>
-                    <td v-else-if="key !== 'colspan' && coll[key] !== undefined">
+                    <td v-else-if="coll['_rowspan'] && coll['_rowspan'].key === key" :rowspan="coll['_rowspan'].num">
+                        {{coll[key]}}
+                    </td>
+                    <td v-else-if="typeof coll[key] === 'object' && key !== '_rowspan' && key !== '_colspan'">
+                        <a v-if="coll[key].type === 'link'" :href="coll[key].url">{{coll[key].key}}</a>
+                        <button v-if="coll[key].type === 'button'">{{coll[key].key}}</button>
+                    </td>
+                    <td v-else-if="key !== '_colspan' && key !== '_rowspan' && coll[key] !== undefined">
                         {{coll[key]}}
                     </td>
                 </template>
-            </tr>
-            <tr>
-                <td colspan="2">fafjaf</td>
-                <td rowspan="2">fsfafs</td>
-            </tr>
-            <tr>
-                <td>fafjaf</td>
-                <td>fsfafs</td>
             </tr>
         </tbody>
     </table>
@@ -40,100 +39,81 @@ export default {
                     {
                         id: '编号',
                         name: '姓名',
-                        tel: '电话'
+                        tel: '电话',
+                        add: '地址',
+                        option: '选项'
                     },
                     {
-                        id: 0,
+                        id: 1,
+                        name: 'bohai',
+                        tel: '13910506488',
+                        add: '漠河',
+                        option: {
+                            type: 'link',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        }
+                    },
+                    {
+                        id: 2,
                         name: 'bilibili',
-                        colspan: {
+                        add: '北京',
+                        option: {
+                            type: 'button',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        },
+                        _colspan: {
                             key: 'name',
                             num: 2
                         }
                     },
                     {
-                        id: 0,
+                        id: 3,
                         name: '吧啦吧啦',
-                        tel: '392839383783'
+                        tel: '392839383783',
+                        add: '北京',
+                        _rowspan: {
+                            key: 'add',
+                            num: 2
+                        },
+                        option: {
+                            type: 'link',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        }
                     },
                     {
-                        id: 0,
+                        id: 4,
                         name: 'bilibili',
-                        tel: '13909292827'
+                        tel: '13909292827',
+                        option: {
+                            type: 'link',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        }
                     },
                     {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
+                        id: 1,
+                        name: 'bohai',
+                        tel: '13910506488',
+                        add: '漠河',
+                        option: {
+                            type: 'link',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        }
                     },
                     {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
-                    },
-                    {
-                        id: 0,
-                        name: 'bilibili',
-                        tel: '13909292827'
-                    },
-                    {
-                        id: 0,
-                        name: '吧啦吧啦',
-                        tel: '392839383783'
+                        id: 1,
+                        name: 'bohai',
+                        tel: '13910506488',
+                        add: '漠河',
+                        option: {
+                            type: 'link',
+                            key: '百度',
+                            url: 'http://www.baidu.com'
+                        }
                     }
                 ]
             }
