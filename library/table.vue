@@ -33,91 +33,11 @@
 export default {
     props: {
         collection: {
-            type: Array,
-            default: function () {
-                return [
-                    {
-                        id: '编号',
-                        name: '姓名',
-                        tel: '电话',
-                        add: '地址',
-                        option: '选项'
-                    },
-                    {
-                        id: 1,
-                        name: 'bohai',
-                        tel: '13910506488',
-                        add: '漠河',
-                        option: {
-                            type: 'link',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        }
-                    },
-                    {
-                        id: 2,
-                        name: 'bilibili',
-                        add: '北京',
-                        option: {
-                            type: 'button',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        },
-                        _colspan: {
-                            key: 'name',
-                            num: 2
-                        }
-                    },
-                    {
-                        id: 3,
-                        name: '吧啦吧啦',
-                        tel: '392839383783',
-                        add: '北京',
-                        _rowspan: {
-                            key: 'add',
-                            num: 2
-                        },
-                        option: {
-                            type: 'link',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        }
-                    },
-                    {
-                        id: 4,
-                        name: 'bilibili',
-                        tel: '13909292827',
-                        option: {
-                            type: 'link',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        }
-                    },
-                    {
-                        id: 1,
-                        name: 'bohai',
-                        tel: '13910506488',
-                        add: '漠河',
-                        option: {
-                            type: 'link',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        }
-                    },
-                    {
-                        id: 1,
-                        name: 'bohai',
-                        tel: '13910506488',
-                        add: '漠河',
-                        option: {
-                            type: 'link',
-                            key: '百度',
-                            url: 'http://www.baidu.com'
-                        }
-                    }
-                ]
-            }
+            type: Array
         }
+    },
+    watch: {
+        'collection': 'getKey'
     },
     data () {
         return {
@@ -125,7 +45,15 @@ export default {
         }
     },
     mounted () {
-        this.keys = Object.keys(this.collection[0])
+        this.init();
+    },
+    methods: {
+        init () {
+            this.getKey();
+        },
+        getKey () {
+            this.keys = this.collection.length > 0 ? Object.keys(this.collection[0]) : []
+        }
     }
 }
 </script>

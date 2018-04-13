@@ -1,8 +1,11 @@
 <template>
   <div class="hello">
-    <h1 class="page-title">{{msg}}</h1>
-    <me_slideshow :images="list" :time="15000"></me_slideshow>
-    <me_table></me_table>
+    <h1 class="page-title font">{{msg}}</h1>
+    <h2 class="font">轮播图</h2>
+    <me_slideshow :images="imgList" :time="15000"></me_slideshow>
+    <h2 class="font">表格</h2>
+    <me_table :collection="tableData2"></me_table>
+    <me_table :collection="tableData3"></me_table>
   </div>
 </template>
 
@@ -13,22 +16,28 @@ export default {
     data () {
         return {
             msg: 'Welcome to my Vue component library',
-            list: []
+            imgList: [],
+            tableData2: [],
+            tableData3: []
         }
     },
     mounted () {
-        const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.json'
+        // const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.json'
         const URL = '/static/data/banner_images.json'
-
-        console.log(GITHUB_URL)
-        console.log(URL)
+        const TABLE_DATA_URL_3 = '/static/data/table_data_3.json'
+        const TABLE_DATA_URL_2 = '/static/data/table_data_2.json'
 
         axios.get(URL).then((res) => {
-            console.log(res)
-
             res.data[0].btnHoverColor = '#54b883'
+            this.$data.imgList = res.data
+        })
 
-            this.$data.list = res.data
+        axios.get(TABLE_DATA_URL_2).then((res) => {
+            this.$data.tableData2 = res.data
+        })
+
+        axios.get(TABLE_DATA_URL_3).then((res) => {
+            this.$data.tableData3 = res.data
         })
     }
 }
@@ -52,10 +61,20 @@ a {
 }
 
 .page-title {
-    /*background: #dddddd;*/
     padding: 20px;
     margin: 0;
-    font: 26px "Helvetica Neue", "Open Sans", sans-serif;
+    font-size: 26px;
+}
+
+.font {
+    font: "Helvetica Neue", "Open Sans", sans-serif;
     font-weight: 100;
+}
+
+h2 {
+    background: #fbfbfb;
+    margin: 0;
+    height: 55px;
+    line-height: 55px;
 }
 </style>
