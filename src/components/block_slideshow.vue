@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 15:23:01
+ * @LastEditTime: 2021-04-27 15:59:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -108,7 +108,7 @@ export default {
                     'btnHoverColor': '#40b883'
                 },
                 {
-                    'url"': 'http://ykonlinevideo.bs2dl.yy.com:80/original/959aaecaa1e44034827243035c74d79f.jpg',
+                    'url"': 'http://ykonlinevideo.bs2dl.yy.com/original/959aaecaa1e44034827243035c74d79f.jpg',
                     'link': 'http://www.hqwx.com',
                     'title': '这是一个轮播图组件',
                     'subtitle': '',

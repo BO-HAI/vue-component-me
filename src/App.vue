@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 13:49:28
+ * @LastEditTime: 2021-04-27 15:46:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/App.vue
@@ -10,8 +10,8 @@
   <div id="app">
     <header>
         <img src="./assets/logo.png">
-        <!-- <h1 class="header-title">我的Vue组件</h1> -->
-        <h2 class="header-subtitle">Welcome to MeVue component library</h2>
+        <h1 class="header-title">HQUI</h1>
+        <h2 class="header-subtitle">Welcome to HuanQiu component library</h2>
     </header>
 
     <router-view/>
