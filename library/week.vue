@@ -730,7 +730,7 @@ export default {
 
             .front {
                 transform: translatez(1px);
-                background-color: #33465a;
+                background-color: $color-primary;
                 float: left;
             }
 
