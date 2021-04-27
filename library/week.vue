@@ -60,7 +60,7 @@ export default {
             default: ''
         },
         // 表头
-        weekTitleAttr: {
+        weekTitles: {
             type: Array,
             default: function () {
                 return ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
@@ -504,7 +504,7 @@ export default {
                     year: _Y_,
                     month: _M_,
                     day: _D_,
-                    name: that.weekTitleAttr[i],
+                    name: that.weekTitles[i],
                     isActive: _isActive_,
                     timeStamp: _TIMESTAMP_,
                     dayOfWeek: _DAYOFWEEK_,

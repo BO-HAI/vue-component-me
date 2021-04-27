@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 15:59:05
+ * @LastEditTime: 2021-04-27 17:16:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -68,7 +68,7 @@
                         <td>images</td>
                         <td>[Array | {url, link, title, subtitle, linkText, color, btnHoverColor}]</td>
                         <td>图片合集</td>
-                        <td></td>
+                        <td>title为空不渲染按钮, 为整张图片加上链接</td>
                     </tr>
                 </tbody>
             </table>
@@ -108,11 +108,11 @@ export default {
                     'btnHoverColor': '#40b883'
                 },
                 {
-                    'url"': 'http://ykonlinevideo.bs2dl.yy.com/original/959aaecaa1e44034827243035c74d79f.jpg',
+                    'url': 'http://ykonlinevideo.bs2dl.yy.com/original/959aaecaa1e44034827243035c74d79f.jpg',
                     'link': 'http://www.hqwx.com',
-                    'title': '这是一个轮播图组件',
+                    'title': '',
                     'subtitle': '',
-                    'linkText': 'ABOUT US',
+                    'linkText': '',
                     'color': '#ffffff',
                     'btnHoverColor': '#40b883'
                 },

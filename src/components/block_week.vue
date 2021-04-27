@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 14:44:52
+ * @LastEditTime: 2021-04-27 17:29:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -17,10 +17,12 @@
             </div>
         </div>
         <div class="stage-block">
+            <p>动画1</p>
             <me_week v-model="dateStr" @change="onWeekChange"></me_week>
         </div>
         <div class="stage-block">
-            <me_week v-model="dateStr" @change="onWeekChange" :animation-id="2"></me_week>
+            <p>动画2</p>
+            <me_week v-model="dateStr" @change="onWeekChange" :animation-id="2" :weekTitles="['星期一','星期二','星期三','星期四','星期五','星期六','星期日']"></me_week>
         </div>
         <div class="stage-block pre">
             <p>

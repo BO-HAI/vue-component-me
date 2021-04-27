@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 15:46:09
+ * @LastEditTime: 2021-04-27 17:25:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/App.vue
@@ -31,7 +31,7 @@ export default {
 header {
     padding: 20px 0;
     color: $color-font;
-
+    text-align: center;
     .header-title {
         font-weight: 900;
     }
