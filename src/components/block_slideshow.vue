@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 14:56:30
+ * @LastEditTime: 2021-04-27 15:23:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -83,28 +83,65 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
     name: 'index',
     data () {
         return {
-            list: []
+            list: [
+                {
+                    'url': 'http://ykonlinevideo.bs2dl.yy.com:80/original/359026dcb19541888898d8705fddbe48.jpg',
+                    'link': 'http://www.hqwx.com',
+                    'title': '这是一个轮播图组件',
+                    'subtitle': '',
+                    'linkText': 'ABOUT US',
+                    'color': '#ffffff',
+                    'btnHoverColor': '#40b883'
+                },
+                {
+                    'url': 'http://ykonlinevideo.bs2dl.yy.com:80/original/c6299568d981433c877de5421cf08218.jpg',
+                    'link': 'http://www.hqwx.com',
+                    'title': '这是一个轮播图组件',
+                    'subtitle': '',
+                    'linkText': 'ABOUT US',
+                    'color': '#ffffff',
+                    'btnHoverColor': '#40b883'
+                },
+                {
+                    'url"': 'http://ykonlinevideo.bs2dl.yy.com:80/original/959aaecaa1e44034827243035c74d79f.jpg',
+                    'link': 'http://www.hqwx.com',
+                    'title': '这是一个轮播图组件',
+                    'subtitle': '',
+                    'linkText': 'ABOUT US',
+                    'color': '#ffffff',
+                    'btnHoverColor': '#40b883'
+                },
+                {
+                    'url': 'http://ykonlinevideo.bs2dl.yy.com:80/original/e5d511f0b8a94470a12171bb6c54e01a.jpg',
+                    'link': 'http://www.hqwx.com',
+                    'title': '这是一个轮播图组件',
+                    'subtitle': '',
+                    'linkText': 'ABOUT US',
+                    'color': '#ffffff',
+                    'btnHoverColor': '#40b883'
+                }
+            ]
         }
     },
     mounted () {
-        const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.json'
-        const URL = '/static/data/banner_images.json'
+        // const GITHUB_URL = '/vue-component-me-demo/static/data/banner_images.json'
+        // const URL = '/static/data/banner_images.json'
 
-        console.log(GITHUB_URL)
-        console.log(URL)
+        // console.log(GITHUB_URL)
+        // console.log(URL)
 
-        axios.get(URL).then((res) => {
-            console.log(res)
+        // axios.get(URL).then((res) => {
+        //     console.log(res)
 
-            res.data[0].btnHoverColor = '#54b883'
+        //     res.data[0].btnHoverColor = '#40b883'
 
-            this.$data.list = res.data
-        })
+        //     this.$data.list = res.data
+        // })
     }
 }
 </script>
