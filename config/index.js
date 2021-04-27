@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-27 10:24:21
+ * @LastEditTime: 2021-04-27 14:53:16
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /vue-component-me/config/index.js
+ */
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -50,7 +58,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/vue-component-me-demo/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

@@ -1,16 +1,26 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 14:41:25
+ * @LastEditTime: 2021-04-27 15:01:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
 -->
 <template>
-  <div class="clearfix">
-    <Slidesshow></Slidesshow>
-    <Week></Week>
-  </div>
+    <div class="clearfix">
+         <div class="stage-block pre">
+            <h2 class="h2">Start</h2>
+            <pre>
+                npm i vue-component-me
+
+                import component_me from 'vue-component-me'
+
+                Vue.use(component_me)
+            </pre>
+        </div>
+        <Slidesshow></Slidesshow>
+        <Week></Week>
+    </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 14:36:22
+ * @LastEditTime: 2021-04-27 14:56:30
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -72,6 +72,12 @@
                     </tr>
                 </tbody>
             </table>
+            <p>
+                示例:
+            </p>
+            <pre>
+                &lt;me_slideshow :images=&quot;list&quot; :time=&quot;15000&quot;&gt;&lt;/me_slideshow&gt;
+            </pre>
         </div>
     </div>
 </template>
