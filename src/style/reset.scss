@@ -1,0 +1,133 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (max-width:500px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    /*margin-top: 60px;*/
+}
+
+
+.clearfix {
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    /* If supporting IE 6/7 */
+    *zoom: 1;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+
+@for $i from 2 through 6 {
+    .ellipsis#{$i} {
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: #{$i};
+        line-clamp: #{$i};
+        -webkit-box-orient: vertical;
+    }
+}
+
+
+.stage-block {
+    width: 70%;
+    margin: 30px auto;
+
+    .h2 {
+        border-top: 1px solid #dddddd;
+        padding-top: 30px;
+        text-align: left;
+    }
+}
+.pre {
+    text-align: left;
+
+    pre {
+        background: #dddddd;
+        margin: 30px;
+        margin: 30px 0;
+        padding: 20px 0;
+    }
+
+    .tab {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #40b883;
+        color: $color-white;
+        border-radius: 3px;
+        height: 8px;
+        line-height: 8px;
+        margin: 0 5px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        font-size: 12px;
+
+        th {
+            background: #35495e;
+            color: $color-white;
+            text-align: center;
+            border: 1px solid #dddddd;
+            height: 30px;
+        }
+        td {
+            border: 1px solid #dddddd;
+            height: 25px;
+            padding: 0 5px;
+        }
+    }
+}
+
+.component-week-set-block {
+    margin: 30px 0;
+    .txt i {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    input, button {
+        height: 30px;
+        font-size: 16px;
+        padding: 0 5px;
+        box-sizing: content-box;
+        margin: 10px;
+    }
+
+    button {
+        background: #40b883;
+        border: 0;
+        color: #ffffff;
+        height: 34px;
+        border-radius: 3px;
+        padding: 0 10px;
+    }
+}

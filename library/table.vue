@@ -1,21 +1,29 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-04-27 10:24:21
+ * @LastEditTime: 2021-04-27 11:21:33
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /vue-component-me/library/table.vue
+-->
 <template lang="html">
     <table>
         <thead>
             <tr>
-                <td>头</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>
-                    身
+                    
                 </td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
                 <td>
-                    脚
+                    
                 </td>
             </tr>
         </tfoot>
