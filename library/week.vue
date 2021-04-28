@@ -134,6 +134,13 @@ export default {
                         css: {
                         }
                     },
+                },
+                '2': {
+                    weekDayListElementParams: {},
+                    weekDayElementParams: {
+                        css: {
+                        }
+                    },
                 }
             }
         }
@@ -141,14 +148,14 @@ export default {
     mounted: function() {
 
         let that = this;
-        that.animation_params[1].weekDayListElementParams = {
+        that.animation_params[that.animationId].weekDayListElementParams = {
             width: parseInt(that.$refs.weekDayList.$el.offsetWidth),
             height: parseInt(that.$refs.weekDayList.$el.offsetHeight )
         }
 
-        that.animation_params[1].weekDayElementParams = {
-            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7),
-            height: that.animation_params[1].weekDayListElementParams.height
+        that.animation_params[that.animationId].weekDayElementParams = {
+            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7),
+            height: that.animation_params[that.animationId].weekDayListElementParams.height
         }
 
         that.run(that.datePoint);
@@ -195,7 +202,7 @@ export default {
                 case 1:
                     if (type === 'init') {
                         css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                             height: that.animation_params[1].weekDayListElementParams.height + 'px',
                             position: 'absolute',
                             top: 0,
@@ -204,20 +211,20 @@ export default {
                         } 
                     } else if (type === 'enter') {
                         css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                             height: that.animation_params[1].weekDayListElementParams.height + 'px',
                             position: 'absolute',
                             top: 0,
-                            left: i * Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            left: i * Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                             opacity: 1
                         }
                     } else if (type === 'leave') {
                        css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                             height: that.animation_params[1].weekDayListElementParams.height + 'px',
                             position: 'absolute',
                             top: 0,
-                            left: i * Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            left: i * Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                             opacity: 1
                         } 
                     }
@@ -225,15 +232,15 @@ export default {
                 case 2:
                     if (type === 'init') {
                         css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                         } 
                     } else if (type === 'enter') {
                         css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                         }
                     } else if (type === 'leave') {
                        css = {
-                            width: Math.floor(that.animation_params[1].weekDayListElementParams.width / 7) + 'px',
+                            width: Math.floor(that.animation_params[that.animationId].weekDayListElementParams.width / 7) + 'px',
                         } 
                     }
                 break;
