@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 17:29:35
+ * @LastEditTime: 2021-04-28 08:28:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -9,7 +9,7 @@
 <template>
     <div>
         <div class="stage-block">
-            <h2 class="h2">Week</h2>
+            <h2 class="h2">周历<i>Week</i></h2>
             <div class="component-week-set-block">
                 <span class="txt">当前日期: <i>{{textVal}}</i></span>
                 <input type="text" v-model="inputVal">

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 17:16:46
+ * @LastEditTime: 2021-04-28 08:28:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -9,7 +9,7 @@
 <template>
     <div>
         <div class="stage-block">
-            <h2 class="h2">Slibeshow</h2>
+            <h2 class="h2">轮播图<i>Slibeshow</i></h2>
             <me_slideshow :images="list" :time="15000"></me_slideshow>
         </div>
         <div class="stage-block pre">

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-27 15:01:40
+ * @LastEditTime: 2021-04-28 08:26:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -9,7 +9,7 @@
 <template>
     <div class="clearfix">
          <div class="stage-block pre">
-            <h2 class="h2">Start</h2>
+            <h2 class="h2">开始<i>Start</i></h2>
             <pre>
                 npm i vue-component-me
 
