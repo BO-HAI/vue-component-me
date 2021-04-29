@@ -151,7 +151,7 @@ export default {
         let that = this;
         that.animation_params[that.animationId].weekDayListElementParams = {
             width: parseInt(that.$refs.weekDayList.$el.offsetWidth),
-            height: parseInt(that.$refs.weekDayList.$el.offsetHeight )
+            height: parseInt(that.$refs.weekDayList.$el.offsetHeight)
         }
 
         that.animation_params[that.animationId].weekDayElementParams = {
@@ -376,26 +376,6 @@ export default {
             that.setDateParams(new_date_str, direction);
             that.getWeekAllDay(direction);
         },
-        // /**
-        //  * @description: 格式化日期
-        //  * @param {*} dateObj
-        //  * @param {*} template
-        //  * @return {*}
-        //  */        
-        // formatDate: function (dateObj, template) {
-        //     var z = {
-        //         y: dateObj.getFullYear(),
-        //         M: dateObj.getMonth() + 1,
-        //         d: dateObj.getDate(),
-        //         h: dateObj.getHours(),
-        //         m: dateObj.getMinutes(),
-        //         s: dateObj.getSeconds()
-        //     };  
-        //     return template.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
-        //         var _n_ = z[v.slice(-1)].toString().slice(-(v.length > 2 ? v.length : 2)); 
-        //         return ((_n_ < 10 ? '0' : '') + _n_); // eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
-        //     });  
-        // },
         /**
          * @description: 设置日期参数
          * @param {String} _dateStr_ 'YYYY-MM-DD' OR 时间戳
@@ -583,10 +563,13 @@ export default {
 
 <style scoped lang="scss">
 @import '../src/style/theme/index';
+$bgColor: #f6f6f6;
 /*日历-周*/
 .hqui.component-week {
-    background: $color-primary;
-    color: $color-white;
+    // background: $color-primary;
+    // color: $color-white;
+    background: $bgColor;
+    color: $color-primary;
     height: 100px;
     user-select: none;
     text-align: center;
@@ -736,13 +719,17 @@ export default {
 
             .front {
                 transform: translatez(1px);
-                background-color: $color-primary;
+                // background-color: $color-primary;
+                background: $bgColor;
+                // color: $color-primary;
                 float: left;
             }
 
             .back {
                 transform: rotatex(0deg) rotatey(180deg) translatez(1px);
-                background-color: $color-primary;
+                // background-color: $color-primary;
+                background: $bgColor;
+                color: $color-primary;
                 display: block;
                 float: left;
                 transform: rotateX(180deg);
