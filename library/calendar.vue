@@ -376,11 +376,21 @@ export default {
             that.run(nextYearAndMonth.year + '-' + nextYearAndMonth.month + '-' + '01', 'now');
         },
 
+        /**
+         * @description: 上一年
+         * @param {*}
+         * @return {*}
+         */        
         prveYear () {
             let that = this;
             that.run((parseInt(that.date.now.year) - 1)+ '-' + that.date.now.month + '-' + '01', 'now');
         },
 
+        /**
+         * @description: 下一年
+         * @param {*}
+         * @return {*}
+         */        
         nextYear () {
             let that = this;
             that.run((parseInt(that.date.now.year) + 1)+ '-' + that.date.now.month + '-' + '01', 'now');
@@ -424,6 +434,7 @@ export default {
             float: left;
             font-size: 30px;
             margin-right: 5px;
+            height: 50px;
 
             .unit {
                 font-size: 16px;
