@@ -1,8 +1,8 @@
 <template>
     <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId" :style="{width: componentWidth}">
         <div class="calendar-info-block">
-            <span class="eui-calendar-year">{{date.now.year}}{{yearUnit}}</span>
-            <span class="eui-calendar-month">{{date.now.month}}{{yearUnit}}</span>
+            <span class="eui-calendar-year">{{date.now.year}}<span class="unit">{{yearUnit}}</span></span>
+            <span class="eui-calendar-month">{{date.now.month}}<span class="unit">{{monthUnit}}</span></span>
             <!-- <span class="eui-calendar-day">{{date.now.day}}日</span> -->
         </div>
         <div class="calendar-control-block">
@@ -418,6 +418,17 @@ export default {
         line-height: 50px;
         font-size: 24px;
         font-weight: bold;
+
+        .eui-calendar-year,
+        .eui-calendar-month {
+            float: left;
+            font-size: 30px;
+            margin-right: 5px;
+
+            .unit {
+                font-size: 16px;
+            }
+        }
     }
 
     .calendar-control-block {
