@@ -18,7 +18,7 @@
         <div class="calendar-days">
             <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
                 <div class="date-info">
-                    <i class="date-month-txt" v-if="showMonth">{{date.now.prevMonth}}月</i>
+                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
@@ -26,7 +26,7 @@
             </div>
             <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
                 <div class="date-info">
-                    <i class="date-month-txt" v-if="showMonth">{{date.now.month}}月</i>
+                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
@@ -34,7 +34,7 @@
             </div>
             <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
                 <div class="date-info">
-                    <i class="date-month-txt" v-if="showMonth">{{date.now.nextMonth}}月</i>
+                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
@@ -87,7 +87,7 @@ export default {
             type: Number,
             default: 1
         },
-        showMonth: {
+        unitShowMonth: {
             trye: Boolean,
             default: false
         },
