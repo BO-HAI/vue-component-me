@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-28 14:03:43
- * @LastEditTime: 2021-04-29 08:39:58
+ * @LastEditTime: 2021-04-29 11:16:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/library/use/dateTools.js
@@ -52,7 +52,7 @@
     /**
      * 获得每个月的日期有多少，注意 month - [0-11]
      * @param  {[type]} year  [description]
-     * @param  {[type]} month [description] 需要传入-1的月份
+     * @param  {[type]} month [description] 非自然月 month 0-11
      * @return {[type]}       [description]
      */
     Tools.prototype.getMonthCount = function (year, month) {
@@ -63,7 +63,7 @@
     /**
      * @description: 获得某年某月的 x号 是星期几，这里要注意的是 JS 的 API-getDay() 是从 [日-六](0-6)，返回 number 
      * @param {*} year
-     * @param {*} month
+     * @param {*} month 自然月(1-12)
      * @param {*} day
      * @return {*}
      */    
@@ -79,7 +79,7 @@
     /**
      * @description: 获得上个月的天数 
      * @param {*} year
-     * @param {*} month
+     * @param {*} month 自然月(1-12)
      * @return {*}
      */    
     Tools.prototype.getPrevMonthCount = function (year, month) {
@@ -93,7 +93,7 @@
     /**
      * @description: 获得下个月的天数 
      * @param {*} year
-     * @param {*} month
+     * @param {*} month 自然月(1-12)
      * @return {*}
      */    
     Tools.prototype.getNextMonthCount = function (year, month) {
@@ -101,6 +101,34 @@
             return this.getMonthCount(year + 1, 0);
         } else {
             return this.getMonthCount(year, month); // 传入的月份已经加1, 这里获取下个月保持不变, 例如今天是8月, 传入的也是8(1开始), 获取下个月其实就是下标8的月份(0开始,即9月)
+        }
+    }
+
+    /**
+     * @description: 获取上个月的年份与月份
+     * @param {*} year
+     * @param {*} month
+     * @return {*}
+     */    
+    Tools.prototype.getPrevYearAndMonth = function (year, month) {
+        let thisDate = new Date(year + '-' + month + '-01');
+        let timeStamp = thisDate.getTime() - 1000 * 60 * 60 * 24;
+        let newDate = new Date(timeStamp);
+        return {
+            year: newDate.getFullYear(),
+            month: newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1 
+        }
+    }
+
+    Tools.prototype.getNextYearAndMonth = function (year, month) {
+        let arr = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let count = arr[parseInt(month) - 1] || (this.isLeapYear(year) ? 29 : 28);
+        let thisDate = new Date(year + '-' + month + '-' + count);
+        let timeStamp = thisDate.getTime() + 1000 * 60 * 60 * 24;
+        let newDate = new Date(timeStamp);
+        return {
+            year: newDate.getFullYear(),
+            month: newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1 
         }
     }
 
