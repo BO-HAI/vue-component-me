@@ -1,5 +1,5 @@
 <template>
-    <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId">
+    <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId" :style="{width: componentWidth}">
         <div class="calendar-info-block">
             <span class="eui-calendar-year">{{date.now.year}}{{yearUnit}}</span>
             <span class="eui-calendar-month">{{date.now.month}}{{yearUnit}}</span>
@@ -12,7 +12,7 @@
             <button @click="nextMonth">下个月</button>
             <button @click="nextYear">&gt;</button>
         </div>
-        <div class="calendar-week clearfix" ref="weekBlock" :style="{width: animation_params[animationId].weekBlockElementParams.titleWidth + 'px'}">
+        <div class="calendar-week clearfix" ref="weekBlock" :style="{width: componentWidth}">
             <span class="week-item" :style="{width: animation_params[animationId].weekBlockElementParams.width + 'px'}" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
         <div class="calendar-days">
@@ -102,12 +102,16 @@ export default {
         yearUnit: {
             type: String,
             default: '年'
+        },
+        width: {
+            type: String,
+            default: ''
         }
-
     },
     data () {
         return{
             changeDatePoint: this.datePoint,
+            componentWidth: '',
             title: '本周',
             date: {
                 // 当前选中的日期
@@ -171,34 +175,25 @@ export default {
 
         let that = this;
 
-        that.animation_params[that.animationId].weekBlockElementParams.width = parseInt(that.$refs.weekBlock.offsetWidth / 7); 
-        that.animation_params[that.animationId].weekBlockElementParams.titleWidth = that.animation_params[that.animationId].weekBlockElementParams.width * 7; 
+        that.animation_params[that.animationId].weekBlockElementParams.width = parseInt(that.$refs.weekBlock.offsetWidth / 7);
+        
+        if (that.width.length === 0) {
+            that.componentWidth = that.animation_params[that.animationId].weekBlockElementParams.width * 7 + 'px'; 
+        }
 
         that.run();
+    },
+    computed: {
+       
     },
     watch: {
         datePoint(newValue) {
             let that = this;
-            let _run_ = true;
-            (function () {
-                that.date.everyday.forEach(function (item) {
-                    if (item.dateStr === newValue) {
-                        item.isActive = true;
-                        _run_ = false;
-                    } else {
-                        item.isActive = false;
-                    }
-                });
-            }());
-
-            // 只有在不是本周的情况下才会重新渲染
-            if (_run_) {
-                this.run(newValue);
-            } else {
-                this.setDateParams(newValue, 'now');
-            }
+            let date = new Date(newValue);
+            that.run(date.getTime());
         }, 
         changeDatePoint(newValue) {
+            console.log(newValue);
             this.$emit('change', newValue.dateStr);
         }
     },
@@ -230,6 +225,8 @@ export default {
                 that.date.select.dateStr = that.date.select.year + '-' + that.date.select.month + '-' + that.date.select.day;
                 that.date.select.prevMonth = _now_date_.getMonth() < 10 ? '0' + _now_date_.getMonth() : _now_date_.getMonth();
                 that.date.select.nextMonth = _now_date_.getMonth() + 2 < 10 ? '0' + (_now_date_.getMonth() + 2) : _now_date_.getMonth() + 2;  
+
+                that.changeDatePoint = Object.assign({}, that.date.select);
             }
 
             // 用于保存切换的年份月份(其他信息,仅辅助作用)
@@ -252,8 +249,6 @@ export default {
             that.date.today.dateStr = that.date.today.year + '-' + that.date.today.month + '-' + that.date.today.day;
             that.date.today.prevMonth = _today_.getMonth() < 10 ? '0' + _today_.getMonth() : _today_.getMonth();
             that.date.today.nextMonth = _today_.getMonth() + 2 < 10 ? '0' + (_today_.getMonth() + 2) : _today_.getMonth() + 2;  
-
-            that.changeDatePoint = Object.assign({}, that.date.now);
         },
         /**
          * @description: 
@@ -312,7 +307,6 @@ export default {
                 return n < 0 ? 0 : n;
             }()))).forEach(function (item) {
                 let nextYearAndMonth = dateTools.getNextMonth(year, month);
-                console.log(nextYearAndMonth);
                 that.date.nextMonthDays.push({
                     day: item < 10 ? '0' + item : item,
                     year: nextYearAndMonth.year,
@@ -355,9 +349,7 @@ export default {
          */        
         onChange (dayObj) {
             let that = this;
-            console.log(dayObj);
             that.run(dayObj.year + '-' + dayObj.month + '-' + dayObj.day, 'select');
-
         },
         /**
          * @description: 上个月
