@@ -6,12 +6,14 @@
             <!-- <span class="eui-calendar-day">{{date.now.day}}日</span> -->
         </div>
         <div class="calendar-control-block">
+            <button @click="prveYear">&lt;</button>
             <button @click="prveMonth">上个月</button>
             <button @click="comeback">今日</button>
             <button @click="nextMonth">下个月</button>
+            <button @click="nextYear">&gt;</button>
         </div>
-        <div class="calendar-week clearfix" ref="weekBlock">
-            <span class="week-item" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
+        <div class="calendar-week clearfix" ref="weekBlock" :style="{width: animation_params[animationId].weekBlockElementParams.titleWidth + 'px'}">
+            <span class="week-item" :style="{width: animation_params[animationId].weekBlockElementParams.width + 'px'}" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
         <div class="calendar-days">
             <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
@@ -19,7 +21,7 @@
                     <i class="date-month-txt" v-if="showMonth">{{date.now.prevMonth}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
-                <div class="day-container">
+                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
                 </div>
             </div>
             <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
@@ -27,7 +29,7 @@
                     <i class="date-month-txt" v-if="showMonth">{{date.now.month}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
-                <div class="day-container">
+                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
                 </div>
             </div>
             <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
@@ -35,7 +37,7 @@
                     <i class="date-month-txt" v-if="showMonth">{{date.now.nextMonth}}月</i>
                     <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
-                <div class="day-container">
+                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
                 </div>
             </div>
         </div>
@@ -108,6 +110,7 @@ export default {
             changeDatePoint: this.datePoint,
             title: '本周',
             date: {
+                // 当前选中的日期
                 select: {
                     // 时间戳
                     timeStamp: 0,
@@ -122,6 +125,7 @@ export default {
                     // 日期字符串
                     dateStr: this.time
                 },
+                // 日历渲染参照此对象, 渲染的具体年月来自这个对象
                 now: {
                     // 时间戳
                     timeStamp: 0,
@@ -136,6 +140,7 @@ export default {
                     // 日期字符串
                     dateStr: this.time
                 },
+                // 今日(暂未参与逻辑)
                 today: {
                     // 时间戳
                     timeStamp: 0,
@@ -156,7 +161,8 @@ export default {
             },
             animation_params: {
                 '1': {
-                    weekBlockElementParams: {}
+                    weekBlockElementParams: {},
+                    titleWidth: ''
                 }
             }
         }
@@ -166,6 +172,7 @@ export default {
         let that = this;
 
         that.animation_params[that.animationId].weekBlockElementParams.width = parseInt(that.$refs.weekBlock.offsetWidth / 7); 
+        that.animation_params[that.animationId].weekBlockElementParams.titleWidth = that.animation_params[that.animationId].weekBlockElementParams.width * 7; 
 
         that.run();
     },
@@ -200,10 +207,11 @@ export default {
             let that = this;
             that.setDateParams(_dateStr_, _type_);
             that.renderMonth();
-        },
-                /**
-         * @description: 设置日期参数
+        },     
+        /**
+        * @description: 设置日期参数
          * @param {String} _dateStr_ 'YYYY-MM-DD' OR 时间戳
+         * @param {String} type       "all": 更新全部日期; “now”:更新当前选择年份与月份, 日历渲染参照这个日期; “select”: 更新选择当前日期, 负责记录当前选中的日期
          * @return {*}
          */        
         setDateParams: function (_dateStr_, type="all") {
@@ -224,7 +232,7 @@ export default {
                 that.date.select.nextMonth = _now_date_.getMonth() + 2 < 10 ? '0' + (_now_date_.getMonth() + 2) : _now_date_.getMonth() + 2;  
             }
 
-            // 用于保存切换的月份(其他信息,仅辅助作用)
+            // 用于保存切换的年份月份(其他信息,仅辅助作用)
             if (type === 'now' || type === 'all') {
                 that.date.now.timeStamp = _now_date_.getTime();
                 that.date.now.dayOfWeek = _now_date_.getDay() === 0 ? 7 : _now_date_.getDay();  //this.nowDayOfWeek === 0 ? 7: this.nowDayOfWeek
@@ -271,7 +279,7 @@ export default {
 
             if (weekdayNumber === 0) {
                 (prevArr.slice(-1 * weekdayNumber, 0)).forEach(function (item) {
-                    let prevYearAndMonth = dateTools.getPrevYearAndMonth(year, month);
+                    let prevYearAndMonth = dateTools.getPrevMonth(year, month);
                     that.date.prevMonthDays.push({
                         day: item < 10 ? '0' + item : item,
                         year: prevYearAndMonth.year,
@@ -285,7 +293,7 @@ export default {
 
             } else {
                 (prevArr.slice(-1 * weekdayNumber)).forEach(function (item) {
-                    let prevYearAndMonth = dateTools.getPrevYearAndMonth(year, month);
+                    let prevYearAndMonth = dateTools.getPrevMonth(year, month);
                     that.date.prevMonthDays.push({
                         day: item < 10 ? '0' + item : item,
                         year: prevYearAndMonth.year,
@@ -303,7 +311,7 @@ export default {
                 let n = 42 - thisArr.length - weekdayNumber;
                 return n < 0 ? 0 : n;
             }()))).forEach(function (item) {
-                let nextYearAndMonth = dateTools.getNextYearAndMonth(year, month);
+                let nextYearAndMonth = dateTools.getNextMonth(year, month);
                 console.log(nextYearAndMonth);
                 that.date.nextMonthDays.push({
                     day: item < 10 ? '0' + item : item,
@@ -340,26 +348,57 @@ export default {
                 }(day))
             });
         },
+        /**
+         * @description: 选择日期
+         * @param {*} dayObj
+         * @return {*}
+         */        
         onChange (dayObj) {
             let that = this;
             console.log(dayObj);
             that.run(dayObj.year + '-' + dayObj.month + '-' + dayObj.day, 'select');
 
         },
+        /**
+         * @description: 上个月
+         * @param {*}
+         * @return {*}
+         */        
         prveMonth () {
             let that = this;
             let nowDate = new Date(that.date.now.dateStr);
-            
-            let prevYearAndMonth = dateTools.getPrevYearAndMonth(that.date.now.year, that.date.now.month);
+            // 获取上个月的年与月份
+            let prevYearAndMonth = dateTools.getPrevMonth(that.date.now.year, that.date.now.month);
             that.run(prevYearAndMonth.year + '-' + prevYearAndMonth.month + '-' + '01', 'now');
         },
+        /**
+         * @description: 下个月
+         * @param {*}
+         * @return {*}
+         */        
         nextMonth () {
             let that = this;
             let nowDate = new Date(that.date.now.dateStr);
-            
-            let nextYearAndMonth = dateTools.getNextYearAndMonth(that.date.now.year, that.date.now.month);
+            // 获取下个月的年与月份
+            let nextYearAndMonth = dateTools.getNextMonth(that.date.now.year, that.date.now.month);
             that.run(nextYearAndMonth.year + '-' + nextYearAndMonth.month + '-' + '01', 'now');
         },
+
+        prveYear () {
+            let that = this;
+            that.run((parseInt(that.date.now.year) - 1)+ '-' + that.date.now.month + '-' + '01', 'now');
+        },
+
+        nextYear () {
+            let that = this;
+            that.run((parseInt(that.date.now.year) + 1)+ '-' + that.date.now.month + '-' + '01', 'now');
+        },
+
+        /**
+         * @description: 回到今日
+         * @param {*}
+         * @return {*}
+         */        
         comeback () {
             let that = this;
             let nowDate = new Date();
@@ -393,10 +432,20 @@ export default {
         float: right;
         height: 50px;
         line-height: 50px;
+
+        button {
+            border: 0;
+            background: $color-primary;
+            color: $color-white;
+            height: 30px;
+            font-size: 12px;
+            line-height: 30px;
+            cursor: pointer;
+        }
     }
 
     .calendar-week {
-        display: flex;
+        // display: flex;
         height: 50px;
         line-height: 50px;
         background: $color-primary;
@@ -405,8 +454,9 @@ export default {
 
         .week-item {
             font-size: 12px;
-            flex: 1;
+            // flex: 1;
             text-align: center;
+            float: left;
         }
     }
 
@@ -419,6 +469,7 @@ export default {
             border-bottom: 0;
             box-sizing: border-box;
             cursor: pointer;
+            position: relative;
 
             .date-info {
                 margin-top: 10px;

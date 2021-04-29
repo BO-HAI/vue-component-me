@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-28 14:03:43
- * @LastEditTime: 2021-04-29 11:16:52
+ * @LastEditTime: 2021-04-29 14:47:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/library/use/dateTools.js
@@ -106,11 +106,11 @@
 
     /**
      * @description: 获取上个月的年份与月份
-     * @param {*} year
-     * @param {*} month
-     * @return {*}
+     * @param {String} year
+     * @param {String} month 自然月
+     * @return {Object} 返回上月月份, 同时给出上月所在年份
      */    
-    Tools.prototype.getPrevYearAndMonth = function (year, month) {
+    Tools.prototype.getPrevMonth = function (year, month) {
         let thisDate = new Date(year + '-' + month + '-01');
         let timeStamp = thisDate.getTime() - 1000 * 60 * 60 * 24;
         let newDate = new Date(timeStamp);
@@ -120,7 +120,13 @@
         }
     }
 
-    Tools.prototype.getNextYearAndMonth = function (year, month) {
+    /**
+     * @description: 
+     * @param {String} year
+     * @param {String} month 自然月
+     * @return {Object} 返回上月月份, 同时给出上月所在年份
+     */    
+    Tools.prototype.getNextMonth = function (year, month) {
         let arr = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         let count = arr[parseInt(month) - 1] || (this.isLeapYear(year) ? 29 : 28);
         let thisDate = new Date(year + '-' + month + '-' + count);
