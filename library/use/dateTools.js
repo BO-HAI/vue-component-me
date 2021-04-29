@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-28 14:03:43
- * @LastEditTime: 2021-04-28 16:35:38
+ * @LastEditTime: 2021-04-29 08:39:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/library/use/dateTools.js
@@ -19,6 +19,28 @@
     let Tools = function () {
 
     }
+
+    /**
+     * @description: 格式化日期
+     * @param {*} dateObj
+     * @param {*} template
+     * @return {*}
+     */        
+    Tools.prototype.formatDate = function (dateObj, template) {
+        var z = {
+            y: dateObj.getFullYear(),
+            M: dateObj.getMonth() + 1,
+            d: dateObj.getDate(),
+            h: dateObj.getHours(),
+            m: dateObj.getMinutes(),
+            s: dateObj.getSeconds()
+        };  
+        return template.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
+            var _n_ = z[v.slice(-1)].toString().slice(-(v.length > 2 ? v.length : 2)); 
+            return ((_n_ < 10 ? '0' : '') + _n_); // eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
+        });  
+    }
+
     /**
      * 为了获得每个月的日期有多少，我们需要判断 平年闰年[四年一闰，百年不闰，四百年再闰]
      * @param  {[type]} year [description]

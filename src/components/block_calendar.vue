@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-28 17:03:53
+ * @LastEditTime: 2021-04-28 21:23:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -9,8 +9,8 @@
 <template>
     <div>
         <div class="stage-block">
-            <div style="width: 50%">
-                <me_calendar></me_calendar>
+            <div style="width: 35%">
+                <me_calendar :dayUnit="''"></me_calendar>
             </div>
         </div>
     </div>

@@ -1,0 +1,31 @@
+.clearfix {
+    &:before, &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+    /* If supporting IE 6/7 */
+    *zoom: 1;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+
+@for $i from 2 through 6 {
+    .ellipsis#{$i} {
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: #{$i};
+        line-clamp: #{$i};
+        -webkit-box-orient: vertical;
+    }
+}

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import dateTools from './use/dateTools'
 export default {
     name: 'component-week',
     model: {
@@ -159,8 +160,6 @@ export default {
         }
 
         that.run(that.datePoint);
-
-        console.log(that.$refs);
     },
     watch: {
         datePoint(newValue) {
@@ -377,26 +376,26 @@ export default {
             that.setDateParams(new_date_str, direction);
             that.getWeekAllDay(direction);
         },
-        /**
-         * @description: 格式化日期
-         * @param {*} dateObj
-         * @param {*} template
-         * @return {*}
-         */        
-        formatDate: function (dateObj, template) {
-            var z = {
-                y: dateObj.getFullYear(),
-                M: dateObj.getMonth() + 1,
-                d: dateObj.getDate(),
-                h: dateObj.getHours(),
-                m: dateObj.getMinutes(),
-                s: dateObj.getSeconds()
-            };  
-            return template.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
-                var _n_ = z[v.slice(-1)].toString().slice(-(v.length > 2 ? v.length : 2)); 
-                return ((_n_ < 10 ? '0' : '') + _n_); // eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
-            });  
-        },
+        // /**
+        //  * @description: 格式化日期
+        //  * @param {*} dateObj
+        //  * @param {*} template
+        //  * @return {*}
+        //  */        
+        // formatDate: function (dateObj, template) {
+        //     var z = {
+        //         y: dateObj.getFullYear(),
+        //         M: dateObj.getMonth() + 1,
+        //         d: dateObj.getDate(),
+        //         h: dateObj.getHours(),
+        //         m: dateObj.getMinutes(),
+        //         s: dateObj.getSeconds()
+        //     };  
+        //     return template.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
+        //         var _n_ = z[v.slice(-1)].toString().slice(-(v.length > 2 ? v.length : 2)); 
+        //         return ((_n_ < 10 ? '0' : '') + _n_); // eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2))
+        //     });  
+        // },
         /**
          * @description: 设置日期参数
          * @param {String} _dateStr_ 'YYYY-MM-DD' OR 时间戳
@@ -486,8 +485,8 @@ export default {
             that.date.everyday = [];
             for (var i = 0; i < 7; i++) {
                 let _d1_ = new Date(originYear, originMonth, originDay - originDayFoWeek + i + 1);
-                let _YMD_ = that.formatDate(_d1_, 'yyyy-MM-dd');
-                let _MD_ = that.formatDate(_d1_, 'yyyy年MM月dd日');
+                let _YMD_ = dateTools.formatDate(_d1_, 'yyyy-MM-dd');
+                let _MD_ = dateTools.formatDate(_d1_, 'yyyy年MM月dd日');
                 let _YMDARR_ = _YMD_.split('-');
                 let _Y_ = _YMDARR_[0];
                 let _M_ = _YMDARR_[1]; 

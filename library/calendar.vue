@@ -1,39 +1,39 @@
 <template>
     <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId">
         <div class="calendar-info-block">
-            <span class="eui-calendar-year">{{date.now.year}}年</span>
-            <span class="eui-calendar-month">{{date.now.month}}月</span>
-            <span class="eui-calendar-day">{{date.now.day}}日</span>
+            <span class="eui-calendar-year">{{date.now.year}}{{yearUnit}}</span>
+            <span class="eui-calendar-month">{{date.now.month}}{{yearUnit}}</span>
+            <!-- <span class="eui-calendar-day">{{date.now.day}}日</span> -->
         </div>
         <div class="calendar-control-block">
             <button>上个月</button>
             <button>今日</button>
             <button>下个月</button>
         </div>
-        <div class="calendar-week" ref="weekBlock">
+        <div class="calendar-week clearfix" ref="weekBlock">
             <span class="week-item" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
         <div class="calendar-days">
             <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
                 <div class="date-info">
-                    <i class="date-month-txt">{{date.now.prevMonth}}月</i>
-                    <i class="date-day-txt">{{item.number}}日</i>
+                    <i class="date-month-txt" v-if="showMonth">{{date.now.prevMonth}}月</i>
+                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container">
                 </div>
             </div>
-            <div class="day-item" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css">
+            <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css">
                 <div class="date-info">
-                    <i class="date-month-txt">{{date.now.month}}月</i>
-                    <i class="date-day-txt">{{item.number}}日</i>
+                    <i class="date-month-txt" v-if="showMonth">{{date.now.month}}月</i>
+                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container">
                 </div>
             </div>
             <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
                 <div class="date-info">
-                    <i class="date-month-txt">{{date.now.nextMonth}}月</i>
-                    <i class="date-day-txt">{{item.number}}日</i>
+                    <i class="date-month-txt" v-if="showMonth">{{date.now.nextMonth}}月</i>
+                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
                 </div>
                 <div class="day-container">
                 </div>
@@ -84,7 +84,24 @@ export default {
         animationId: {
             type: Number,
             default: 1
+        },
+        showMonth: {
+            trye: Boolean,
+            default: false
+        },
+        dayUnit: {
+            type: String,
+            default: '日'
+        },
+        monthUnit: {
+            type: String,
+            default: '月'
+        },
+        yearUnit: {
+            type: String,
+            default: '年'
         }
+
     },
     data () {
         return{
@@ -168,21 +185,17 @@ export default {
         run () {
             let that = this;
             that.setDateParams();
-            that.renderMonth(that.date.now.year, that.date.now.month);
+            that.renderMonth(that.date.now.year, that.date.now.month, that.date.now.day);
         },
                 /**
          * @description: 设置日期参数
          * @param {String} _dateStr_ 'YYYY-MM-DD' OR 时间戳
          * @return {*}
          */        
-        setDateParams: function (_dateStr_, _direction_) {
+        setDateParams: function (_dateStr_) {
             let that = this;
             let _now_date_ = _dateStr_ ? new Date(_dateStr_) : new Date();
             let _today_ = new Date();
-
-            if (_direction_ === 'prev' || _direction_ === 'next' || _direction_ === 'thisWeek') {
-                return;
-            }
 
             that.date.now.timeStamp = _now_date_.getTime();
             that.date.now.dayOfWeek = _now_date_.getDay() === 0 ? 7 : _now_date_.getDay();  //this.nowDayOfWeek === 0 ? 7: this.nowDayOfWeek
@@ -217,17 +230,12 @@ export default {
             let thisArr = dateTools.getThisMonthCount(year, parseInt(month))
             let nextArr = dateTools.getNextMonthCount(year, parseInt(month))
             let weekdayNumber = dateTools.getWeekNumber(year, parseInt(month) - 1, 1) // 获取本月一号是星期几
-
-            console.log(prevArr);
-            console.log(thisArr);
-            console.log(nextArr);
+            let _isActive_ = false;
 
             if (weekdayNumber === 0) {
-                // that.date.prevMonthDays = prevArr.slice(-1 * weekdayNumber, 0);
-
                 (prevArr.slice(-1 * weekdayNumber, 0)).forEach(function (item) {
                     that.date.prevMonthDays.push({
-                        number: item,
+                        day: item < 10 ? '0' + item : item,
                         css: {
                             width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                             height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
@@ -236,11 +244,9 @@ export default {
                 });
 
             } else {
-                // that.date.prevMonthDays = prevArr.slice(-1 * weekdayNumber);
-
                 (prevArr.slice(-1 * weekdayNumber)).forEach(function (item) {
                     that.date.prevMonthDays.push({
-                        number: item,
+                        day: item < 10 ? '0' + item : item,
                         css: {
                             width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                             height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
@@ -249,19 +255,13 @@ export default {
                 });
             }
 
-            // that.date.nextMonthDays = nextArr.slice(0, (function () {
-            //     // 42天, 减去当月天数 减去星期数, 计算出下月补全天数(为什么不是35天? 部分月份会超出35天)
-            //     let n = 42 - nextArr.length - weekdayNumber;
-            //     return n < 0 ? 0 : n;
-            // }()));
-
             (nextArr.slice(0, (function () {
                 // 42天, 减去当月天数 减去星期数, 计算出下月补全天数(为什么不是35天? 部分月份会超出35天)
                 let n = 42 - thisArr.length - weekdayNumber;
                 return n < 0 ? 0 : n;
             }()))).forEach(function (item) {
                 that.date.nextMonthDays.push({
-                    number: item,
+                    day: item < 10 ? '0' + item : item,
                     css: {
                         width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                         height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
@@ -269,18 +269,30 @@ export default {
                 });
             });
 
-            // that.date.thisMonthDays = thisArr;
             thisArr.forEach(function (item) {
-                that.date.thisMonthDays.push({
-                    number: item,
-                    css: {
-                        width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
-                        height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                let day = item < 10 ? '0' + item : item;
+                (function (_day_) {
+                    
+                    // 是否被选中日期
+                    if (that.date.today.year.toString() === year.toString() && that.date.today.month.toString() === month.toString() && that.date.today.day.toString() === _day_.toString()) {
+                        _isActive_ = true;
+                    } else {
+                        _isActive_ = false;
                     }
-                }); 
-            });
 
-            console.log(that.date.nextMonthDays);
+                    that.date.thisMonthDays.push({
+                        day: item < 10 ? '0' + item : item,
+                        isActive: _isActive_,
+                        css: {
+                            width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
+                            height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                        }
+                    }); 
+                }(day))
+            });
+        },
+        onChange (year, month, day) {
+
         }
     }
 }
@@ -290,11 +302,26 @@ export default {
 
 <style scoped lang="scss">
 @import '../src/style/theme/index';
+@import '../src/style/component';
 /*日历-周*/
 .hqui.component-calendar {
     width: 100%;
     box-sizing: border-box;
     user-select: none;
+
+    .calendar-info-block {
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .calendar-control-block {
+        float: right;
+        height: 50px;
+        line-height: 50px;
+    }
 
     .calendar-week {
         display: flex;
@@ -302,8 +329,10 @@ export default {
         line-height: 50px;
         background: $color-primary;
         color: $color-white;
+        clear: both;
 
         .week-item {
+            font-size: 12px;
             flex: 1;
             text-align: center;
         }
@@ -318,6 +347,26 @@ export default {
             border-bottom: 0;
             box-sizing: border-box;
             cursor: pointer;
+
+            .date-info {
+                margin-top: 10px;
+                .date-month-txt {
+                    font-style: normal;
+                    font-size: 14px;
+                    font-weight: normal;
+                }
+
+                .date-day-txt {
+                    font-size: 16px;
+                    font-weight: bold;
+                    font-style: normal;
+                }
+            }
+        }
+
+        .day-item.active {
+            background: $color-assist;
+            color: $color-white
         }
 
         .day-item:nth-child(7n) {
