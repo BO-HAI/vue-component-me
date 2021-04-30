@@ -1,5 +1,5 @@
 <template>
-    <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId" :style="{width: componentWidth}">
+    <div class="hqui component-calendar" :class="'component-calendar-ani' + animationId" :style="{width: componentWidth, height: componentHeight}">
         <div class="calendar-info-block">
             <span class="eui-calendar-year">{{date.now.year}}<span class="unit">{{yearUnit}}</span></span>
             <span class="eui-calendar-month">{{date.now.month}}<span class="unit">{{monthUnit}}</span></span>
@@ -15,30 +15,78 @@
         <div class="calendar-week clearfix" ref="weekBlock" :style="{width: componentWidth}">
             <span class="week-item" :style="{width: animation_params[animationId].weekBlockElementParams.width + 'px'}" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
-        <div class="calendar-days">
-            <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
-                <div class="date-info">
-                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
-                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+        <div class="calendar-days-group clearfix">
+            <div class="calendar-days">
+                <div class="day-item" :class="[item.type, item.isActive ? 'active' : '']" v-for="(item, index) in date.everydayOld" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'prev'">{{date.now.prevMonth}}月</i>
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'this'">{{date.now.month}}月</i>
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'next'">{{date.now.nextMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
+                </div> 
+                <!-- <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
                 </div>
-                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
                 </div>
+                <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
+                </div> -->
             </div>
-            <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
-                <div class="date-info">
-                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
-                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+            <div class="calendar-days show">
+                <div class="day-item" :class="[item.type, item.isActive ? 'active' : '', item.cssName]" v-for="(item, index) in date.everyday" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'prev'">{{date.now.prevMonth}}月</i>
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'this'">{{date.now.month}}月</i>
+                        <i class="date-month-txt" v-if="unitShowMonth && item.type === 'next'">{{date.now.nextMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
+                </div> 
+                <!-- <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
                 </div>
-                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
                 </div>
-            </div>
-            <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
-                <div class="date-info">
-                    <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
-                    <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                </div>
-                <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                </div>
+                <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
+                    <div class="date-info">
+                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
+                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
+                    </div>
+                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -112,6 +160,7 @@ export default {
         return{
             changeDatePoint: this.datePoint,
             componentWidth: '',
+            componentHeight: '',
             title: '本周',
             date: {
                 // 当前选中的日期
@@ -161,14 +210,17 @@ export default {
                 },
                 prevMonthDays: [],
                 thisMonthDays: [],
-                nextMonthDays: []
+                nextMonthDays: [],
+                everyday: [],
+                everydayOld: []
             },
             animation_params: {
                 '1': {
                     weekBlockElementParams: {},
                     titleWidth: ''
                 }
-            }
+            },
+            direction: 'next' // "prev" "next"
         }
     },
     mounted: function() {
@@ -178,13 +230,25 @@ export default {
         that.animation_params[that.animationId].weekBlockElementParams.width = parseInt(that.$refs.weekBlock.offsetWidth / 7);
         
         if (that.width.length === 0) {
-            that.componentWidth = that.animation_params[that.animationId].weekBlockElementParams.width * 7 + 'px'; 
+            that.componentWidth = that.animation_params[that.animationId].weekBlockElementParams.width * 7 + 'px';
+            that.componentHeight = that.animation_params[that.animationId].weekBlockElementParams.width * 7 + 100 + 'px'; 
         }
 
         that.run();
     },
     computed: {
-       
+        // getShowEveryday () {
+        //     let that = this;
+        //     let _newArr_ =  [...that.date.prevMonthDays, ...that.date.thisMonthDays, ...that.date.nextMonthDays];
+
+        //     // that['animation_' + that.animationId + '_enter'](_newArr_);
+        //     return _newArr_;
+        // },
+        // getEveryday () {
+        //     let that = this;
+        //     let _newArr_ =  [...that.date.prevMonthDays, ...that.date.thisMonthDays, ...that.date.nextMonthDays];
+        //     return _newArr_;
+        // }
     },
     watch: {
         datePoint(newValue) {
@@ -193,7 +257,6 @@ export default {
             that.run(date.getTime());
         }, 
         changeDatePoint(newValue) {
-            console.log(newValue);
             this.$emit('change', newValue.dateStr);
         }
     },
@@ -202,6 +265,29 @@ export default {
             let that = this;
             that.setDateParams(_dateStr_, _type_);
             that.renderMonth();
+        },
+        animation_1_enter () {
+            let that = this;
+            let x = that.direction === 'next' ? 0 : that.date.everyday.length - 1;
+
+            let timer = setInterval(function () {
+                if (that.direction === 'next') {
+                    if (x === that.date.everyday.length - 1) {
+                        clearTimeout(timer);
+                    }
+                    that.date.everyday[x]['cssName'] = 'enter';
+                    x++;
+                }
+
+                if (that.direction === 'prev') {
+                    if (x === 0) {
+                        clearTimeout(timer);
+                    }
+                    that.date.everyday[x]['cssName'] = 'enter';
+                    x--;
+                }
+                
+            }, 20);
         },     
         /**
         * @description: 设置日期参数
@@ -272,74 +358,128 @@ export default {
             that.date.nextMonthDays = [];
             that.date.thisMonthDays = [];
 
-            if (weekdayNumber === 0) {
-                (prevArr.slice(-1 * weekdayNumber, 0)).forEach(function (item) {
-                    let prevYearAndMonth = dateTools.getPrevMonth(year, month);
-                    that.date.prevMonthDays.push({
-                        day: item < 10 ? '0' + item : item,
-                        year: prevYearAndMonth.year,
-                        month: prevYearAndMonth.month,
-                        css: {
-                            width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
-                            height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
-                        }
-                    });
+            if (that.date.everyday.length > 0) {
+                that.date.everydayOld = that.date.everyday; 
+            }
+            that.date.everyday = [];
+
+            function buildPrevMonth () {
+                let promise = new Promise(function (resolve) {
+                    if (weekdayNumber === 0) {
+                        prevArr = prevArr.slice(-1 * weekdayNumber, 0);
+                        prevArr.forEach(function (item) {
+                            let prevYearAndMonth = dateTools.getPrevMonth(year, month);
+                            let _data_ = {
+                                day: item < 10 ? '0' + item : item,
+                                year: prevYearAndMonth.year,
+                                month: prevYearAndMonth.month,
+                                css: {
+                                    width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
+                                    height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                                },
+                                cssName: '',
+                                type: 'prev'
+                            }
+                            that.date.prevMonthDays.push(_data_);
+                        });
+                        resolve({status: {code: 0}, data: that.date.prevMonthDays}); 
+                    } else {
+                        prevArr = prevArr.slice(-1 * weekdayNumber);
+                        prevArr.forEach(function (item) {
+                            let prevYearAndMonth = dateTools.getPrevMonth(year, month);
+                            let _data_ = {
+                                day: item < 10 ? '0' + item : item,
+                                year: prevYearAndMonth.year,
+                                month: prevYearAndMonth.month,
+                                css: {
+                                    width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
+                                    height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                                },
+                                cssName: '',
+                                type: 'prev'
+                            };
+                            that.date.prevMonthDays.push(_data_);
+                        });
+                        resolve({status: {code: 0}, data: that.date.prevMonthDays}); 
+                    }
                 });
 
-            } else {
-                (prevArr.slice(-1 * weekdayNumber)).forEach(function (item) {
-                    let prevYearAndMonth = dateTools.getPrevMonth(year, month);
-                    that.date.prevMonthDays.push({
-                        day: item < 10 ? '0' + item : item,
-                        year: prevYearAndMonth.year,
-                        month: prevYearAndMonth.month,
-                        css: {
-                            width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
-                            height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
-                        }
-                    });
-                });
+                return promise;    
             }
 
-            (nextArr.slice(0, (function () {
-                // 42天, 减去当月天数 减去星期数, 计算出下月补全天数(为什么不是35天? 部分月份会超出35天)
-                let n = 42 - thisArr.length - weekdayNumber;
-                return n < 0 ? 0 : n;
-            }()))).forEach(function (item) {
-                let nextYearAndMonth = dateTools.getNextMonth(year, month);
-                that.date.nextMonthDays.push({
-                    day: item < 10 ? '0' + item : item,
-                    year: nextYearAndMonth.year,
-                    month: nextYearAndMonth.month,
-                    css: {
-                        width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
-                        height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
-                    }
-                });
-            });
+            function buildNextMonth () {
+                let promise = new Promise(function (resolve) {
+                    nextArr = nextArr.slice(0, (function () {
+                        // 42天, 减去当月天数 减去星期数, 计算出下月补全天数(为什么不是35天? 部分月份会超出35天)
+                        let n = 42 - thisArr.length - weekdayNumber;
+                        return n < 0 ? 0 : n;
+                    }()));
 
-            thisArr.forEach(function (item) {
-                let day = item < 10 ? '0' + item : item;
-                (function (_day_) {
-                    
-                    // 是否被选中日期
-                    if (that.date.select.year.toString() === year.toString() && that.date.select.month.toString() === month.toString() && that.date.select.day.toString() === _day_.toString()) {
-                        _isActive_ = true;
-                    } else {
-                        _isActive_ = false;
-                    }
-
-                    that.date.thisMonthDays.push({
-                        day: item < 10 ? '0' + item : item,
-                        year: year,
-                        month: month,
-                        isActive: _isActive_,
-                        css: {
-                            width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
-                            height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                    nextArr.forEach(function (item) {
+                        let nextYearAndMonth = dateTools.getNextMonth(year, month);
+                        let _data_ = {
+                            day: item < 10 ? '0' + item : item,
+                            year: nextYearAndMonth.year,
+                            month: nextYearAndMonth.month,
+                            css: {
+                                width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
+                                height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                            },
+                            cssName: '',
+                            type: 'next'
                         }
-                    }); 
-                }(day))
+                        that.date.nextMonthDays.push(_data_);
+                    });
+
+                    resolve({status: {code: 0}, data: that.date.nextMonthDays}); 
+                });
+
+                return promise;
+            }
+
+            function buildThisMonth () {
+                let promise = new Promise(function (resolve) {
+                    thisArr.forEach(function (item) {
+                        let day = item < 10 ? '0' + item : item;
+                        (function (_day_) {
+                            
+                            // 是否被选中日期
+                            if (that.date.select.year.toString() === year.toString() && that.date.select.month.toString() === month.toString() && that.date.select.day.toString() === _day_.toString()) {
+                                _isActive_ = true;
+                            } else {
+                                _isActive_ = false;
+                            }
+
+                            let _data_ = {
+                                day: item < 10 ? '0' + item : item,
+                                year: year,
+                                month: month,
+                                isActive: _isActive_,
+                                css: {
+                                    width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
+                                    height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
+                                },
+                                cssName: '',
+                                type: 'this'
+                            }
+
+                            that.date.thisMonthDays.push(_data_);
+                        }(day));
+                        resolve({status: {code: 0}, data: that.date.thisMonthDays}); 
+                    });
+                });
+
+                return promise;
+            }
+
+            let promise_prev = buildPrevMonth();
+            let primise_this = buildThisMonth();
+            let primise_next = buildNextMonth();
+
+            Promise.all([promise_prev, primise_this, primise_next]).then(function (res) {
+                that.date.everyday = [...res[0].data, ...res[1].data, ...res[2].data];    
+                console.log(that.date.everyday);
+                that['animation_' + that.animationId + '_enter']();
             });
         },
         /**
@@ -362,6 +502,7 @@ export default {
             // 获取上个月的年与月份
             let prevYearAndMonth = dateTools.getPrevMonth(that.date.now.year, that.date.now.month);
             that.run(prevYearAndMonth.year + '-' + prevYearAndMonth.month + '-' + '01', 'now');
+            that.direction = 'prev';
         },
         /**
          * @description: 下个月
@@ -374,6 +515,7 @@ export default {
             // 获取下个月的年与月份
             let nextYearAndMonth = dateTools.getNextMonth(that.date.now.year, that.date.now.month);
             that.run(nextYearAndMonth.year + '-' + nextYearAndMonth.month + '-' + '01', 'now');
+            that.direction = 'next';
         },
 
         /**
@@ -384,6 +526,7 @@ export default {
         prveYear () {
             let that = this;
             that.run((parseInt(that.date.now.year) - 1)+ '-' + that.date.now.month + '-' + '01', 'now');
+            that.direction = 'prev';
         },
 
         /**
@@ -394,6 +537,7 @@ export default {
         nextYear () {
             let that = this;
             that.run((parseInt(that.date.now.year) + 1)+ '-' + that.date.now.month + '-' + '01', 'now');
+            that.direction = 'next';
         },
 
         /**
@@ -406,6 +550,7 @@ export default {
             let nowDate = new Date();
         
             that.run(nowDate.getTime(), 'all');
+            that.direction = 'next';
         }
     }
 }
@@ -421,6 +566,11 @@ export default {
     width: 100%;
     box-sizing: border-box;
     user-select: none;
+    overflow: hidden;
+
+    * {
+       box-sizing: border-box; 
+    }
 
     .calendar-info-block {
         float: left;
@@ -465,6 +615,8 @@ export default {
         background: $color-primary;
         color: $color-white;
         clear: both;
+        position: relative;
+        z-index: 1;
 
         .week-item {
             font-size: 12px;
@@ -474,7 +626,15 @@ export default {
         }
     }
 
+    .calendar-days-group {
+        width: 100%;
+        position: relative;
+    }
+
     .calendar-days {
+        position: absolute;
+        top: 0;
+        left: 0;
         .day-item {
             float: left;
             text-align: center;
@@ -484,6 +644,7 @@ export default {
             box-sizing: border-box;
             cursor: pointer;
             position: relative;
+            background: $color-white;
 
             .date-info {
                 margin-top: 10px;
@@ -518,6 +679,19 @@ export default {
             background: #f6f6f6;
             color: #c7c7c7;
             cursor: not-allowed;
+        }
+    }
+    /*秀场*/
+    .calendar-days.show {
+        .day-item {
+            transition: all .5s;
+            opacity: 0;
+            transform: scale(1.2);
+        }
+
+        .day-item.enter {
+            opacity: 1;
+            transform: scale(1);
         }
     }
 }
