@@ -247,8 +247,8 @@ export default {
             
             return css;
         },
-                /**
-         * @description: 获取指定位置的css
+        /**
+         * @description: 获取相应的css名称
          * @param {*} type "init":初始位置 "enter":进入位置 "leave":退出位置
          * @param {*} i
          * @return {*}

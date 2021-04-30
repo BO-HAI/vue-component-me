@@ -16,7 +16,7 @@
             <span class="week-item" :style="{width: animation_params[animationId].weekBlockElementParams.width + 'px'}" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
         <div class="calendar-days-group clearfix">
-            <div class="calendar-days">
+            <div class="calendar-days disabled">
                 <div class="day-item" :class="[item.type, item.isActive ? 'active' : '']" v-for="(item, index) in date.everydayOld" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
                     <div class="date-info">
                         <i class="date-month-txt" v-if="unitShowMonth && item.type === 'prev'">{{date.now.prevMonth}}月</i>
@@ -220,7 +220,7 @@ export default {
                     titleWidth: ''
                 }
             },
-            direction: 'next' // "prev" "next"
+            direction: 'init' // "prev" "next" “init”
         }
     },
     mounted: function() {
@@ -254,6 +254,7 @@ export default {
         datePoint(newValue) {
             let that = this;
             let date = new Date(newValue);
+            that.direction = 'init';
             that.run(date.getTime());
         }, 
         changeDatePoint(newValue) {
@@ -266,28 +267,63 @@ export default {
             that.setDateParams(_dateStr_, _type_);
             that.renderMonth();
         },
+        /**
+         * @description: 获取相应的css名称
+         * @param {*} type "init":初始位置 "enter":进入位置 "leave":退出位置
+         * @param {*} i
+         * @return {*}
+         */        
+        getCssName: function () {
+            let that = this;
+            let css = {};
+            switch (that.animationId) {
+                case 1:
+                
+                break;
+            }
+            
+            return css;
+        },
+        /**
+         * @description: 动画1 进入
+         * @param {*}
+         * @return {*}
+         */        
         animation_1_enter () {
             let that = this;
             let x = that.direction === 'next' ? 0 : that.date.everyday.length - 1;
 
+            if (that.direction === 'now') {
+                that.animation_1_leave();
+            } 
+
             let timer = setInterval(function () {
-                if (that.direction === 'next') {
+                if (that.direction === 'next' ||  that.direction === 'init') {
                     if (x === that.date.everyday.length - 1) {
                         clearTimeout(timer);
+                        that.animation_1_leave();
                     }
-                    that.date.everyday[x]['cssName'] = 'enter';
+                    that.date.everyday[x]['cssName'] = 'leave';
                     x++;
                 }
 
                 if (that.direction === 'prev') {
                     if (x === 0) {
                         clearTimeout(timer);
+                        that.animation_1_leave();
                     }
-                    that.date.everyday[x]['cssName'] = 'enter';
+                    that.date.everyday[x]['cssName'] = 'leave';
                     x--;
                 }
                 
             }, 20);
+        },
+        animation_1_leave () {
+            let that = this;
+
+            that.date.everyday.forEach((item) => {
+                item.cssName = '';
+            });
         },     
         /**
         * @description: 设置日期参数
@@ -377,7 +413,7 @@ export default {
                                     width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                                     height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
                                 },
-                                cssName: '',
+                                cssName: 'enter',
                                 type: 'prev'
                             }
                             that.date.prevMonthDays.push(_data_);
@@ -395,7 +431,7 @@ export default {
                                     width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                                     height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
                                 },
-                                cssName: '',
+                                cssName: 'enter',
                                 type: 'prev'
                             };
                             that.date.prevMonthDays.push(_data_);
@@ -425,7 +461,7 @@ export default {
                                 width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                                 height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
                             },
-                            cssName: '',
+                            cssName: 'enter',
                             type: 'next'
                         }
                         that.date.nextMonthDays.push(_data_);
@@ -459,7 +495,7 @@ export default {
                                     width: that.animation_params[that.animationId].weekBlockElementParams.width + 'px',
                                     height: that.animation_params[that.animationId].weekBlockElementParams.width + 'px'
                                 },
-                                cssName: '',
+                                cssName: 'enter',
                                 type: 'this'
                             }
 
@@ -478,7 +514,6 @@ export default {
 
             Promise.all([promise_prev, primise_this, primise_next]).then(function (res) {
                 that.date.everyday = [...res[0].data, ...res[1].data, ...res[2].data];    
-                console.log(that.date.everyday);
                 that['animation_' + that.animationId + '_enter']();
             });
         },
@@ -489,6 +524,7 @@ export default {
          */        
         onChange (dayObj) {
             let that = this;
+            that.direction = 'now';
             that.run(dayObj.year + '-' + dayObj.month + '-' + dayObj.day, 'select');
         },
         /**
@@ -681,17 +717,29 @@ export default {
             cursor: not-allowed;
         }
     }
+
+    .calendar-days.disabled {
+        .day-item {
+            background: #f6f6f6;
+            color: #c7c7c7;
+            cursor: not-allowed; 
+        }
+    }
     /*秀场*/
     .calendar-days.show {
         .day-item {
+            opacity: 1;
             transition: all .5s;
+        }
+
+        .day-item.enter {
             opacity: 0;
             transform: scale(1.2);
         }
 
-        .day-item.enter {
+        .day-item.leave {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1); 
         }
     }
 }
