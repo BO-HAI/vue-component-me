@@ -251,7 +251,7 @@ export default {
             that.date.today.nextMonth = _today_.getMonth() + 2 < 10 ? '0' + (_today_.getMonth() + 2) : _today_.getMonth() + 2;  
         },
         /**
-         * @description: 
+         * @description: 更新月历 
          * @param {Number} year  自然年
          * @param {Number} month 自然月
          * @param {Number} day   自然日
