@@ -220,7 +220,7 @@ export default {
                     titleWidth: ''
                 }
             },
-            direction: 'init' // "prev" "next" “init”
+            direction: 'init' // "prev" "next" “init”初始化 "now"当前月份
         }
     },
     mounted: function() {
@@ -254,7 +254,7 @@ export default {
         datePoint(newValue) {
             let that = this;
             let date = new Date(newValue);
-            that.direction = 'init';
+            // that.direction = that.direction === 'init' || that.direction === 'now' ? that.direction : 'init';
             that.run(date.getTime());
         }, 
         changeDatePoint(newValue) {
@@ -291,14 +291,25 @@ export default {
          */        
         animation_1_enter () {
             let that = this;
-            let x = that.direction === 'next' ? 0 : that.date.everyday.length - 1;
+            let x = (function (_this_) {
+                if (_this_.direction !== 'prev') {
+                    return 0;
+                } else {
+                    return _this_.date.everyday.length - 1
+                } 
+            }(that));
 
-            if (that.direction === 'now') {
+            if (that.direction === 'now' ||  that.direction === 'init') {
                 that.animation_1_leave();
             } 
 
             let timer = setInterval(function () {
-                if (that.direction === 'next' ||  that.direction === 'init') {
+                if (that.direction !== 'next' && that.direction !== 'prev') {
+                    clearTimeout(timer);
+                    that.animation_1_leave();
+                }
+
+                if (that.direction === 'next') {
                     if (x === that.date.everyday.length - 1) {
                         clearTimeout(timer);
                         that.animation_1_leave();
@@ -314,8 +325,7 @@ export default {
                     }
                     that.date.everyday[x]['cssName'] = 'leave';
                     x--;
-                }
-                
+                }                
             }, 20);
         },
         animation_1_leave () {
@@ -537,8 +547,9 @@ export default {
             let nowDate = new Date(that.date.now.dateStr);
             // 获取上个月的年与月份
             let prevYearAndMonth = dateTools.getPrevMonth(that.date.now.year, that.date.now.month);
-            that.run(prevYearAndMonth.year + '-' + prevYearAndMonth.month + '-' + '01', 'now');
             that.direction = 'prev';
+            that.run(prevYearAndMonth.year + '-' + prevYearAndMonth.month + '-' + '01', 'now');
+            
         },
         /**
          * @description: 下个月
@@ -550,8 +561,8 @@ export default {
             let nowDate = new Date(that.date.now.dateStr);
             // 获取下个月的年与月份
             let nextYearAndMonth = dateTools.getNextMonth(that.date.now.year, that.date.now.month);
-            that.run(nextYearAndMonth.year + '-' + nextYearAndMonth.month + '-' + '01', 'now');
             that.direction = 'next';
+            that.run(nextYearAndMonth.year + '-' + nextYearAndMonth.month + '-' + '01', 'now');
         },
 
         /**
@@ -561,8 +572,8 @@ export default {
          */        
         prveYear () {
             let that = this;
-            that.run((parseInt(that.date.now.year) - 1)+ '-' + that.date.now.month + '-' + '01', 'now');
             that.direction = 'prev';
+            that.run((parseInt(that.date.now.year) - 1)+ '-' + that.date.now.month + '-' + '01', 'now');
         },
 
         /**
@@ -572,8 +583,8 @@ export default {
          */        
         nextYear () {
             let that = this;
-            that.run((parseInt(that.date.now.year) + 1)+ '-' + that.date.now.month + '-' + '01', 'now');
             that.direction = 'next';
+            that.run((parseInt(that.date.now.year) + 1)+ '-' + that.date.now.month + '-' + '01', 'now');
         },
 
         /**
@@ -584,9 +595,8 @@ export default {
         comeback () {
             let that = this;
             let nowDate = new Date();
-        
-            that.run(nowDate.getTime(), 'all');
             that.direction = 'next';
+            that.run(nowDate.getTime(), 'all');
         }
     }
 }
