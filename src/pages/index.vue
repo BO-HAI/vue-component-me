@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-04-28 13:47:35
+ * @LastEditTime: 2021-05-07 09:40:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -21,6 +21,7 @@
         <Slidesshow></Slidesshow>
         <Week></Week>
         <Calendar></Calendar>
+        <Table></Table>
     </div>
 </template>
 
@@ -28,6 +29,7 @@
 import Slidesshow from '../components/block_slideshow'
 import Week from '../components/block_week'
 import Calendar from '../components/block_calendar'
+import Table from '../components/block_table'
 export default {
     name: 'index',
     data () {
@@ -39,7 +41,8 @@ export default {
     components: {
         Slidesshow,
         Week,
-        Calendar
+        Calendar,
+        Table
     }
 }
 </script>
