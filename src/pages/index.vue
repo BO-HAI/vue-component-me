@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-04-27 10:24:21
- * @LastEditTime: 2021-05-07 09:40:13
+ * @LastEditTime: 2021-05-11 15:51:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue-component-me/src/components/HelloWorld.vue
@@ -10,6 +10,25 @@
     <div class="clearfix">
          <div class="stage-block pre">
             <h2 class="h2">开始<i>Start</i></h2>
+
+            <p>私有库安装</p>
+            <pre>
+                绑定host:
+                120.77.144.110 npm.hqwx.com
+                120.77.144.110 registry.hqwx.com
+                120.77.144.110 hqview.hqwx.com
+                120.77.144.110 fed.hqwx.com
+            </pre>
+            <pre>
+                安装:
+                $cnpm install @hqwx/vue-component-me
+            </pre>
+            <pre>
+                js:
+                import component_me from '@hqwx/vue-component-me'
+                Vue.use(component_me)
+            </pre>
+            <p>公共库安装</p>
             <pre>
                 npm i vue-component-me
 
