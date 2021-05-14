@@ -96,7 +96,7 @@ export default {
                     'subtitle': '',
                     'linkText': 'ABOUT US',
                     'color': '#ffffff',
-                    'btnHoverColor': '#40b883'
+                    'btnHoverColor': '#5A82FF'
                 },
                 {
                     'url': 'http://ykonlinevideo.bs2dl.yy.com:80/original/c6299568d981433c877de5421cf08218.jpg',
@@ -105,7 +105,7 @@ export default {
                     'subtitle': '',
                     'linkText': 'ABOUT US',
                     'color': '#ffffff',
-                    'btnHoverColor': '#40b883'
+                    'btnHoverColor': '#5A82FF'
                 },
                 {
                     'url': 'http://ykonlinevideo.bs2dl.yy.com/original/959aaecaa1e44034827243035c74d79f.jpg',
@@ -114,7 +114,7 @@ export default {
                     'subtitle': '',
                     'linkText': '',
                     'color': '#ffffff',
-                    'btnHoverColor': '#40b883'
+                    'btnHoverColor': '#5A82FF'
                 },
                 {
                     'url': 'http://ykonlinevideo.bs2dl.yy.com:80/original/e5d511f0b8a94470a12171bb6c54e01a.jpg',
@@ -123,7 +123,7 @@ export default {
                     'subtitle': '',
                     'linkText': 'ABOUT US',
                     'color': '#ffffff',
-                    'btnHoverColor': '#40b883'
+                    'btnHoverColor': '#5A82FF'
                 }
             ]
         }
@@ -138,7 +138,7 @@ export default {
         // axios.get(URL).then((res) => {
         //     console.log(res)
 
-        //     res.data[0].btnHoverColor = '#40b883'
+        //     res.data[0].btnHoverColor = '#5A82FF'
 
         //     this.$data.list = res.data
         // })

@@ -6,18 +6,18 @@
             <!-- <span class="eui-calendar-day">{{date.now.day}}日</span> -->
         </div>
         <div class="calendar-control-block">
-            <button @click="prveYear">&lt;</button>
-            <button @click="prveMonth">上个月</button>
-            <button @click="comeback">今日</button>
-            <button @click="nextMonth">下个月</button>
-            <button @click="nextYear">&gt;</button>
+            <button class="btn-prve-year" @click="prveYear">&lt;</button>
+            <button class="btn-prve-month" @click="prveMonth">上个月</button>
+            <button class="btn-today" @click="comeback">今日</button>
+            <button class="btn-next-month" @click="nextMonth">下个月</button>
+            <button class="btn-next-year" @click="nextYear">&gt;</button>
         </div>
         <div class="calendar-week clearfix" ref="weekBlock" :style="{width: componentWidth}">
             <span class="week-item" :style="{width: animation_params[animationId].weekBlockElementParams.width + 'px'}" ref="weekItem" v-for="(weekStr, index) in weekTitles" :key="index">{{weekStr}}</span>
         </div>
         <div class="calendar-days-group clearfix">
             <div class="calendar-days disabled">
-                <div class="day-item" :class="[item.type, item.isActive ? 'active' : '']" v-for="(item, index) in date.everydayOld" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
+                <div class="day-item" :class="[item.type, item.isActive ? 'active' : '', item.cssName]" v-for="(item, index) in date.everydayOld" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
                     <div class="date-info">
                         <i class="date-month-txt" v-if="unitShowMonth && item.type === 'prev'">{{date.now.prevMonth}}月</i>
                         <i class="date-month-txt" v-if="unitShowMonth && item.type === 'this'">{{date.now.month}}月</i>
@@ -27,30 +27,6 @@
                     <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
                     </div>
                 </div> 
-                <!-- <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
-                </div>
-                <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
-                </div>
-                <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
-                </div> -->
             </div>
             <div class="calendar-days show">
                 <div class="day-item" :class="[item.type, item.isActive ? 'active' : '', item.cssName]" v-for="(item, index) in date.everyday" :key="index + '_' + item.type" :style="item.css" @click="onChange(item)">
@@ -62,31 +38,7 @@
                     </div>
                     <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
                     </div>
-                </div> 
-                <!-- <div class="day-item prev" v-for="(item, index) in date.prevMonthDays" :key="index + '_prev'" :style="item.css">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.prevMonth}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
                 </div>
-                <div class="day-item" :class="{active: item.isActive}" v-for="(item, index) in date.thisMonthDays" :key="index + '_this'" :style="item.css" @click="onChange(item)">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.month}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
-                </div>
-                <div class="day-item next" v-for="(item, index)  in date.nextMonthDays" :key="index + '_next'" :style="item.css">
-                    <div class="date-info">
-                        <i class="date-month-txt" v-if="unitShowMonth">{{date.now.nextMonth}}月</i>
-                        <i class="date-day-txt">{{item.day}}{{dayUnit}}</i>
-                    </div>
-                    <div class="day-container" v-if="data[item.year] && data[item.year][item.month] && data[item.year][item.month][item.day]" v-html="data[item.year][item.month][item.day]">
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -127,7 +79,7 @@ export default {
 
                 _obj_[_year_] = {};
                 _obj_[_year_][_month_] = {};
-                _obj_[_year_][_month_][_day_] = '<i>今日</i>'; 
+                _obj_[_year_][_month_][_day_] = '<i class="today">今日</i>'; 
                 return _obj_;
             }
         },
@@ -315,6 +267,7 @@ export default {
                         that.animation_1_leave();
                     }
                     that.date.everyday[x]['cssName'] = 'leave';
+                    that.date.everydayOld[x]['cssName'] = 'leave';
                     x++;
                 }
 
@@ -324,6 +277,7 @@ export default {
                         that.animation_1_leave();
                     }
                     that.date.everyday[x]['cssName'] = 'leave';
+                    that.date.everydayOld[x]['cssName'] = 'leave';
                     x--;
                 }                
             }, 20);
@@ -334,6 +288,14 @@ export default {
             that.date.everyday.forEach((item) => {
                 item.cssName = '';
             });
+
+            let timer = setTimeout(function () {
+                clearTimeout(timer);
+                that.date.everydayOld.forEach((item) => {
+                    item.cssName = 'none';
+                });
+            }, 10)
+            
         },     
         /**
         * @description: 设置日期参数
@@ -523,7 +485,10 @@ export default {
             let primise_next = buildNextMonth();
 
             Promise.all([promise_prev, primise_this, primise_next]).then(function (res) {
-                that.date.everyday = [...res[0].data, ...res[1].data, ...res[2].data];    
+                that.date.everyday = [...res[0].data, ...res[1].data, ...res[2].data]; 
+                if (that.date.everydayOld.length === 0) {
+                    that.date.everydayOld = that.date.everyday;   
+                }
                 that['animation_' + that.animationId + '_enter']();
             });
         },
@@ -733,6 +698,16 @@ export default {
             background: #f6f6f6;
             color: #c7c7c7;
             cursor: not-allowed; 
+            opacity: 1;
+            transition: all .5s;
+        }
+
+        .day-item.leave {
+            opacity: 0.5;
+        }
+
+        .day-item.none {
+             opacity: 0;
         }
     }
     /*秀场*/
@@ -753,4 +728,59 @@ export default {
         }
     }
 }
+
+.hqui.component-calendar .calendar-week {
+    background: $color-white;
+    color: $color-black;
+}
+
+.hqui.component-calendar .calendar-control-block button {
+    background: #F8FAFF;
+    color: rgba(24,26,33,0.68);
+    border-radius: 5px;
+}
+
+.hqui.component-calendar .calendar-days {
+    border-radius: 5px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.hqui.component-calendar .calendar-days.disabled {
+    background: linear-gradient(180deg, #FDFEFF 0%, #F8FAFF 100%) !important;
+    color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.hqui.component-calendar .calendar-days .day-item {
+    // background: $color-white;
+    background: transparent;
+}
+
+.hqui.component-calendar .calendar-days .day-item.active {
+    background: linear-gradient(54deg, #5A82FF 50%, #7AAAFF);
+    color: $color-white;
+    border-radius: 5px;
+}
+
+.hqui.component-calendar .calendar-days .day-item.prev, 
+.hqui.component-calendar .calendar-days .day-item.next {
+    // background: $color-white;
+    background: transparent;
+}
+
+.hqui.component-calendar .calendar-days.disabled .day-item {
+    // background: $color-white;
+    background: transparent;
+}
+
+.hqui.component-calendar .calendar-days.disabled .day-item.active {
+    color: #c7c7c7;
+}
+
+.hqui.component-calendar .calendar-days .day-item,
+.hqui.component-calendar .calendar-days .day-item:nth-child(7n),
+.hqui.component-calendar .calendar-days .day-item:nth-child(n + 35) {
+    border: 0;
+}
+
 </style>

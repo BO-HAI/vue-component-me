@@ -114,7 +114,7 @@ export default {
     thead {
         tr {
             text-align: center;
-            background: #35495e;
+            background: #5A82FF;
             color: #ffffff;
             text-align: center;
             border: 1px solid #dddddd;

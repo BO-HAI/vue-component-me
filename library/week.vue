@@ -742,4 +742,49 @@ $bgColor: #f6f6f6;
         }
     }
 }
+
+
+.hqui.component-week {
+    background: linear-gradient(180deg, #FDFEFF 0%, #F8FAFF 100%) !important;
+    color: rgba(0, 0, 0, 0.85) !important;
+}
+.hqui.component-week .week-days .week-day.active {
+    background: linear-gradient(54deg, #5A82FF 50%, #7AAAFF) !important;
+    color: #ffffff !important;
+    border-radius: 3px !important;
+}
+
+.hqui.component-week .week-control .week-ctl-lbtn {
+    border-right: 6px solid #646466 !important;
+}
+
+.hqui.component-week .week-control .week-ctl-rbtn {
+    border-left: 6px solid #646466 !important;
+}
+
+.hqui.component-week-ani2 .week-days .week-day.b .back,
+.hqui.component-week-ani2 .week-days .week-day.b .front {
+    background: linear-gradient(180deg, #FDFEFF 0%, #F8FAFF 100%) !important;
+    color: rgba(0, 0, 0, 0.85) !important; 
+}
+.hqui.component-week-ani2 .week-days .week-day.b .front.active, 
+.hqui.component-week-ani2 .week-days .week-day.b .back.active,
+.hqui.component-week-ani2 .week-days .week-day.a .front.active, 
+.hqui.component-week-ani2 .week-days .week-day.a .back.active {
+    background: linear-gradient(54deg, #5A82FF 50%, #7AAAFF) !important;
+    color: #ffffff !important;
+    border-radius: 3px !important;
+}
+
+.hqui.component-week-ani1 .week-days .week-day .week-day-name,
+.hqui.component-week-ani1 .week-days .week-day .week-day-data {
+    transition: none !important;
+    color: #646466;
+}
+
+.hqui.component-week-ani1 .week-days .week-day.active .week-day-name,
+.hqui.component-week-ani1 .week-days .week-day.active .week-day-data,
+.hqui.component-week-ani1 .week-days .week-day.active .week-day-container {
+    color: #ffffff;
+}
 </style>
